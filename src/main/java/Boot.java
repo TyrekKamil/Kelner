@@ -19,46 +19,41 @@ public class Boot extends Application {
         pane.setPrefSize(WIDTH, HEIGHT);
 
         for (Integer row[]: grid) {
-            Arrays.fill(row, 0);
+            Arrays.fill(row, 1);
         }
 
         for (int x = 0; x < X_TILES; x++){
             for (int y =1; y < Y_TILES; y++){
+                // tiles wewnatrz scian
                 if( y != 1) {
                     Tile tile = new Tile(x, y);
-                    grid[x][y] = 0;
                     pane.getChildren().add(tile);
                 }
+                // przykladowy stolik, z pliku wystarczyloby zczytywac x i y i je tutaj sprawdzac w ifkach w liscie czy cus
                 if((x==5 || x==4) && (y==7 || y==8)){
                     Table table = new Table(x, y);
                     pane.getChildren().add(table);
                     grid[x][y] = 2;
                 }
+                // przykladowy stolik
                 if((x==6 || x==7) && (y==10 || y==11)){
                     Table table = new Table(x, y);
                     pane.getChildren().add(table);
                     grid[x][y] = 2;
                 }
-                if(x==X_TILES-1){
+                // sciana
+                if(x==X_TILES-1 || x == 0){
                     Wall wall = new Wall(x,y);
                     pane.getChildren().add(wall);
                     grid[x][y]=4;
                 }
-                if(y==Y_TILES-1){
+                // sciana
+                if(y==Y_TILES-1 || (y==1 && x != 1)){
                     Wall wall = new Wall(x,y);
                     pane.getChildren().add(wall);
                     grid[x][y]=4;
                 }
-                if(x==0){
-                    Wall wall = new Wall(x,y);
-                    pane.getChildren().add(wall);
-                    grid[x][y]=4;
-                }
-                if(y==1 && x != 1){
-                    Wall wall = new Wall(x,y);
-                    pane.getChildren().add(wall);
-                    grid[x][y]=4;
-                }
+                // wyjscie wejscie
                 if(x==X_TILES-1 && (y==8 || y==9)){
                     Exit exit = new Exit(x, y);
                     grid[x][y] = 3;
