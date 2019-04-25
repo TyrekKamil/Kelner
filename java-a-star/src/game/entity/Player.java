@@ -4,13 +4,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import game.astar.Node;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Player
 {
 
+	@Getter @Setter
 	private int x;
+	@Getter @Setter
 	private int y;
+	@Getter @Setter
 	private int sx;
+	@Getter @Setter
 	private int sy;
 
 	private int speed;
@@ -25,7 +31,7 @@ public class Player
 		this.y = y;
 		sx = 0;
 		sy = 0;
-		speed = 2;
+		speed = 4;
 
 		walking = false;
 		fixing = false;
@@ -98,7 +104,7 @@ public class Player
 			walking = true;
 		}
 	}
-	
+
 	private void walk()
 	{
 		if (path == null)
@@ -139,46 +145,6 @@ public class Player
 				sy %= 32;
 			}
 		}
-	}
-
-	public int getX()
-	{
-		return x;
-	}
-
-	public void setX(int x)
-	{
-		this.x = x;
-	}
-
-	public int getY()
-	{
-		return y;
-	}
-
-	public void setY(int y)
-	{
-		this.y = y;
-	}
-
-	public int getSx()
-	{
-		return sx;
-	}
-
-	public void setSx(int sx)
-	{
-		this.sx = sx;
-	}
-
-	public int getSy()
-	{
-		return sy;
-	}
-
-	public void setSy(int sy)
-	{
-		this.sy = sy;
 	}
 
 }

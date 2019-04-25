@@ -97,32 +97,11 @@ public class Map
 	 * not printed, each non-walkable node is printed as a '#' (pound sign) and
 	 * each node that is in the path as a '@' (at sign).
 	 * 
+	 *
 	 * @param path
 	 *            Optional parameter. List containing the nodes to be drawn as
 	 *            path nodes.
 	 */
-	public void printMap(List<Node> path)
-	{
-		for (int j = 0; j < height; j++)
-		{
-			for (int i = 0; i < width; i++)
-			{
-				if (!nodes[i][j].isWalkable())
-				{
-					System.out.print(" #");
-				}
-				else if (path.contains(new Node(i, j, true)))
-				{
-					System.out.print(" @");
-				}
-				else
-				{
-					System.out.print("  ");
-				}
-			}
-			System.out.print("\n");
-		}
-	}
 
 	/**
 	 * If the X and Y parameters are within the map boundaries, return the node
