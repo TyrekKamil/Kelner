@@ -12,7 +12,7 @@ public class Main
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	public static final String NAME = "Game";
+	public static final String NAME = "Kozubal Trilogy";
 
 	private static BufferedImage image;
 	private static Graphics2D g;

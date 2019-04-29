@@ -98,7 +98,7 @@ public class Game extends JPanel implements MouseListener
 		}
 		else
 		{
-			System.out.println("Can't walk to that node!");
+			System.out.println("can't walk");
 		}
 	}
 
