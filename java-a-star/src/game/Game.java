@@ -84,7 +84,7 @@ public class Game extends JPanel implements MouseListener
 	@Override
 	public void mouseExited(MouseEvent e)
 	{
-	}
+	} //
 
 	@Override
 	public void mousePressed(MouseEvent e)

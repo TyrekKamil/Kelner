@@ -154,7 +154,7 @@ public class Map
 
 		Node adjacent;
 
-		// left node
+		// left
 		if (x > 0)
 		{
 			adjacent = getNode(x - 1, y);
@@ -164,7 +164,7 @@ public class Map
 			}
 		}
 
-		// right node
+		// right
 		if (x < width)
 		{
 			adjacent = getNode(x + 1, y);
@@ -174,7 +174,7 @@ public class Map
 			}
 		}
 
-		// top node
+		// top
 		if (y > 0)
 		{
 			adjacent = this.getNode(x, y - 1);
@@ -184,7 +184,7 @@ public class Map
 			}
 		}
 
-		//  bottom node
+		//  bottom
 		if (y < height)
 		{
 			adjacent = this.getNode(x, y + 1);
