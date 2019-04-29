@@ -37,15 +37,15 @@ public class Map
 			{
 				if (!nodes[x][y].isWalkable())
 				{
-					g.setColor(Color.WHITE);
+					g.setColor(Color.DARK_GRAY);
 				}
 				else if (path != null && path.contains(new Node(x, y, true)))
 				{
-					g.setColor(Color.YELLOW);
+					g.setColor(Color.PINK);
 				}
 				else
 				{
-					g.setColor(Color.BLACK);
+					g.setColor(Color.white);
 				}
 				g.fillRect(x * 32, y * 32, 32, 32);
 			}
