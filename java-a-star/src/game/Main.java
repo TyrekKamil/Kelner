@@ -71,7 +71,6 @@ public class Main
 				tickCount++;
 				if (tickCount % 60 == 0)
 				{
-					// System.out.println("FPS:" + frames);
 					lastTime += 1000;
 					frames = 0;
 				}
