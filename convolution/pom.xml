@@ -15,8 +15,8 @@
   ~ SPDX-License-Identifier: Apache-2.0
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>dl4j-examples</artifactId>
@@ -84,47 +84,44 @@
         <!-- ND4J backend. You need one in every DL4J project. Normally define artifactId as either "nd4j-native-platform" or "nd4j-cuda-9.2-platform" -->
         <dependency>
             <groupId>org.nd4j</groupId>
-            <artifactId>${nd4j.backend}</artifactId>
-            <version>${nd4j.version}</version>
+            <artifactId>nd4j-api</artifactId>
+            <version>1.0.0-beta4</version>
         </dependency>
 
-        <!-- Core DL4J functionality -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
             <artifactId>deeplearning4j-nlp</artifactId>
-            <version>${dl4j.version}</version>
+            <version>1.0.0-beta4</version>
         </dependency>
 
         <dependency>
             <groupId>org.deeplearning4j</groupId>
             <artifactId>deeplearning4j-zoo</artifactId>
-            <version>${dl4j.version}</version>
+            <version>1.0.0-beta4</version>
         </dependency>
 
-        <!-- deeplearning4j-ui is used for visualization: see http://deeplearning4j.org/visualization -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
-            <artifactId>deeplearning4j-ui_${scala.binary.version}</artifactId>
-            <version>${dl4j.version}</version>
+            <artifactId>deeplearning4j-ui_2.11</artifactId>
+            <version>1.0.0-beta4</version>
         </dependency>
 
         <!-- ParallelWrapper & ParallelInference live here -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
             <artifactId>deeplearning4j-parallel-wrapper</artifactId>
-            <version>${dl4j.version}</version>
+            <version>1.0.0-beta4</version>
         </dependency>
 
         <!-- Next 2: used for MapFileConversion Example. Note you need *both* together -->
         <dependency>
             <groupId>org.datavec</groupId>
             <artifactId>datavec-hadoop</artifactId>
-            <version>${datavec.version}</version>
+            <version>1.0.0-beta4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
-            <version>${hadoop.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>jdk.tools</groupId>
@@ -146,31 +143,31 @@
         <dependency>
             <groupId>org.deeplearning4j</groupId>
             <artifactId>arbiter-deeplearning4j</artifactId>
-            <version>${arbiter.version}</version>
+            <version>1.0.0-beta4</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.deeplearning4j/arbiter-ui -->
         <dependency>
             <groupId>org.deeplearning4j</groupId>
-            <artifactId>arbiter-ui_${scala.binary.version}</artifactId>
-            <version>${arbiter.version}</version>
+            <artifactId>arbiter-ui_2.11</artifactId>
+            <version>1.0.0-beta4</version>
         </dependency>
 
         <!-- datavec-data-codec: used only in video example for loading video data -->
         <dependency>
-            <artifactId>datavec-data-codec</artifactId>
             <groupId>org.datavec</groupId>
-            <version>${datavec.version}</version>
+            <artifactId>datavec-api</artifactId>
+            <version>1.0.0-beta4</version>
         </dependency>
 
         <!-- Used in the feedforward/classification/MLP* and feedforward/regression/RegressionMathFunctions example -->
         <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
-            <version>${jfreechart.version}</version>
+            <version>1.0.13</version>
         </dependency>
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jcommon</artifactId>
-            <version>${jcommon.version}</version>
         </dependency>
 
         <!-- Used for downloading data in some of the examples -->
@@ -179,11 +176,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.3.5</version>
         </dependency>
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
+            <version>1.2.3</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -193,7 +190,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec-maven-plugin.version}</version>
+                <version>1.6.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -208,10 +205,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven-shade-plugin.version}</version>
+                <version>3.2.1</version>
                 <configuration>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>${shadedClassifier}</shadedClassifierName>
                     <createDependencyReducedPom>true</createDependencyReducedPom>
                     <filters>
                         <filter>
@@ -235,11 +231,14 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>reference.conf</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -264,11 +263,18 @@
             <id>OpenJFX</id>
             <dependencies>
                 <dependency>
-                    <groupId>com.oracle</groupId>
-                    <artifactId>javafx</artifactId>
-                    <version>${javafx.version}</version>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-base</artifactId>
                 </dependency>
             </dependencies>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>https://mvnrepository.com</url>
+                    <releases><enabled>true</enabled><updatePolicy>always</updatePolicy></releases>
+                    <snapshots><enabled>true</enabled><updatePolicy>always</updatePolicy></snapshots>
+                </pluginRepository>
+            </pluginRepositories>
         </profile>
     </profiles>
 
