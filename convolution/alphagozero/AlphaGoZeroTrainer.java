@@ -1,4 +1,4 @@
-/*******************************************************************************
+package alphagozero; /*******************************************************************************
  * Copyright (c) 2015-2019 Skymind, Inc.
  *
  * This program and the accompanying materials are made available under the
@@ -14,7 +14,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-package org.deeplearning4j.examples.convolution.alphagozero;
 
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -51,7 +50,7 @@ public class AlphaGoZeroTrainer {
         int numFeaturePlanes = 11;
 
         log.info("Initializing AGZ model");
-        ComputationGraph model = DualResnetModel.getModel(numResidualBlocks, numFeaturePlanes);
+        ComputationGraph model = org.deeplearning4j.examples.convolution.alphagozero.DualResnetModel.getModel(numResidualBlocks, numFeaturePlanes);
 
         log.info("Create dummy data");
         INDArray input = Nd4j.create(miniBatchSize,numFeaturePlanes, boardSize, boardSize);

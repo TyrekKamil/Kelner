@@ -1,4 +1,4 @@
-/*******************************************************************************
+package alphagozero; /*******************************************************************************
  * Copyright (c) 2015-2019 Skymind, Inc.
  *
  * This program and the accompanying materials are made available under the
@@ -13,8 +13,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
-
-package org.deeplearning4j.examples.convolution.alphagozero;
 
 import org.deeplearning4j.nn.conf.ComputationGraphConfiguration;
 import org.deeplearning4j.nn.conf.ConvolutionMode;
