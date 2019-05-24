@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Kelner.iml" filepath="$PROJECT_DIR$/.idea/Kelner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/convolution/dl4j-examples.iml" filepath="$PROJECT_DIR$/convolution/dl4j-examples.iml" />
+    </modules>
+  </component>
+</project>
