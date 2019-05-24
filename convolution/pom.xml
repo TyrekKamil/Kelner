@@ -101,11 +101,6 @@
 
         <!-- Next 2: used for MapFileConversion Example. Note you need *both* together -->
         <dependency>
-            <groupId>org.datavec</groupId>
-            <artifactId>datavec-hadoop</artifactId>
-            <version>1.0.0-beta4</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>3.2.0</version>
@@ -140,11 +135,6 @@
         </dependency>
 
         <!-- datavec-data-codec: used only in video example for loading video data -->
-        <dependency>
-            <groupId>org.datavec</groupId>
-            <artifactId>datavec-api</artifactId>
-            <version>1.0.0-beta4</version>
-        </dependency>
 
         <!-- Used in the feedforward/classification/MLP* and feedforward/regression/RegressionMathFunctions example -->
         <dependency>
@@ -174,6 +164,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.8.0-beta2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
         </dependency>
 
     </dependencies>

@@ -14,7 +14,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-package org.deeplearning4j.examples.convolution;
 
 import org.datavec.image.loader.CifarLoader;
 import org.deeplearning4j.api.storage.StatsStorage;
