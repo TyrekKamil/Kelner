@@ -1,42 +1,32 @@
-package alphagozero; /*******************************************************************************
- * Copyright (c) 2015-2019 Skymind, Inc.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Apache License, Version 2.0 which is available at
- * https://www.apache.org/licenses/LICENSE-2.0.
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- * SPDX-License-Identifier: Apache-2.0
- ******************************************************************************/
-
-
+package alphagozero;
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.deeplearning4j.nn.graph.ComputationGraph;
+class DualResnetModel {
 
-/**
- * Train AlphaGo Zero model on dummy data. To run a full AGZ system with DL4J, check out
- *
- * https://github.com/maxpumperla/ScalphaGoZero
- *
- * for a complete example. The input to the network has a number of "planes" the size of the
- * board, i.e. in most cases 19x19. One such plane could be "the number of liberties each
- * black stone on the board has". In the AGZ paper a total of 11 planes are used, while in
- * the previous AlphaGo version there have been 48 (resp. 49).
- *
- * The output of the policy head of the network produces move probabilities and emits one
- * probability for each move on the board, including passing (i.e. 19x19 + 1 = 362 in total).
- * The value head produces winning probabilities for the current position.
- *
- * @author Max Pumperla
- */
+    public static ComputationGraph getModel(int blocks, int numPlanes) {
+
+        DL4JAlphaGoZeroBuilder builder = new DL4JAlphaGoZeroBuilder();
+        String input = "in";
+
+        builder.addInputs(input);
+        String initBlock = "init";
+        String convOut = builder.addConvBatchNormBlock(initBlock, input, numPlanes, true);
+        String towerOut = builder.addResidualTower(blocks, convOut);
+        String policyOut = builder.addPolicyHead(towerOut, true);
+        String valueOut = builder.addValueHead(towerOut, true);
+        builder.addOutputs(policyOut, valueOut);
+
+        ComputationGraph model = new ComputationGraph(builder.buildAndReturn());
+        model.init();
+
+        return model;
+    }
+}
+
 public class AlphaGoZeroTrainer {
 
     private static final Logger log = LoggerFactory.getLogger(AlphaGoZeroTrainer.class);
@@ -50,7 +40,7 @@ public class AlphaGoZeroTrainer {
         int numFeaturePlanes = 11;
 
         log.info("Initializing AGZ model");
-        ComputationGraph model = org.deeplearning4j.examples.convolution.alphagozero.DualResnetModel.getModel(numResidualBlocks, numFeaturePlanes);
+        ComputationGraph model = DualResnetModel.getModel(numResidualBlocks, numFeaturePlanes);
 
         log.info("Create dummy data");
         INDArray input = Nd4j.create(miniBatchSize,numFeaturePlanes, boardSize, boardSize);

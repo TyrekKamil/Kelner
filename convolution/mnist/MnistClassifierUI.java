@@ -1,4 +1,4 @@
-/*******************************************************************************
+package mnist; /*******************************************************************************
  * Copyright (c) 2015-2019 Skymind, Inc.
  *
  * This program and the accompanying materials are made available under the
@@ -14,7 +14,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-package org.deeplearning4j.examples.convolution.mnist;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -23,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javafx.scene.text.Font;
+import mnist.MnistClassifier;
 import org.datavec.image.loader.NativeImageLoader;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
