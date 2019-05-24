@@ -98,7 +98,6 @@ public class AnimalsClassification {
 
     public void run(String[] args) throws Exception {
 
-        log.info("Load data....");
         /**cd
          * Data Setup -> organize and limit data file paths:
          *  - mainPath = path to image files
@@ -139,7 +138,6 @@ public class AnimalsClassification {
          **/
         DataNormalization scaler = new ImagePreProcessingScaler(0, 1);
 
-        log.info("Build model....");
 
         // Uncomment below to try AlexNet. Note change height and width to at least 100
 //        MultiLayerNetwork network = new AlexNet(height, width, channels, numLabels, seed, iterations).init();
@@ -173,7 +171,6 @@ public class AnimalsClassification {
         DataSetIterator trainIter;
 
 
-        log.info("Train model....");
         // test iterator
         ImageRecordReader testRR = new ImageRecordReader(height, width, channels, labelMaker);
         testRR.initialize(testData);
@@ -209,11 +206,9 @@ public class AnimalsClassification {
         System.out.print("\nFor a single example that is labeled " + expectedResult + " the model predicted " + modelPrediction + "\n\n");
 
         if (save) {
-            log.info("Save model....");
             String basePath = FilenameUtils.concat(System.getProperty("user.dir"), "src/main/resources/");
             network.save(new File(basePath + "model.bin"));
         }
-        log.info("****************Example finished********************");
     }
 
     private ConvolutionLayer convInit(String name, int in, int out, int[] kernel, int[] stride, int[] pad, double bias) {
