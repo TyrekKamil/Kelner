@@ -1,4 +1,6 @@
-package mnist; /*******************************************************************************
+/*
+package mnist; */
+/*******************************************************************************
  * Copyright (c) 2015-2019 Skymind, Inc.
  *
  * This program and the accompanying materials are made available under the
@@ -12,7 +14,8 @@ package mnist; /****************************************************************
  * under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- ******************************************************************************/
+ ******************************************************************************//*
+
 
 
 import java.awt.Graphics;
@@ -48,6 +51,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+*/
 /**
  * Test UI for MNIST classifier. User can painting digit by using mouse and predict value using a trained model. <br>
  * Run the {@link MnistClassifier} first to build the model.
@@ -55,7 +59,8 @@ import org.slf4j.LoggerFactory;
  * @author jesuino
  * @author fvaleri
  * @author dariuszzbyrad
- */
+ *//*
+
 public class MnistClassifierUI extends Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(MnistClassifier.class);
     private static final String BASE_PATH = System.getProperty("java.io.tmpdir") + "/mnist";
@@ -172,3 +177,4 @@ public class MnistClassifierUI extends Application {
         return String.format("Prediction: %s with probability: %.1f%%", predictedDigit, probability);
     }
 }
+*/

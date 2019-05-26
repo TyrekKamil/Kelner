@@ -14,7 +14,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ******************************************************************************/
 
-package org.nd4j.linalg.api.ops.impl.transforms.strict;
 
 import onnx.OnnxProto3;
 import org.nd4j.autodiff.functions.DifferentialFunction;
@@ -63,6 +62,11 @@ public class RectifiedTanh extends BaseTransformStrictOp {
     @Override
     public String opName() {
         return "rectified_tanh";
+    }
+
+    @Override
+    public void setExtraArgs(Object[] extraArgs) {
+
     }
 
     @Override
