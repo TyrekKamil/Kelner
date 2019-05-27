@@ -12,7 +12,7 @@ public class Main
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	public static final String NAME = "Game";
+	public static final String NAME = "Kozubal Trilogy";
 
 	private static BufferedImage image;
 	private static Graphics2D g;
@@ -71,7 +71,6 @@ public class Main
 				tickCount++;
 				if (tickCount % 60 == 0)
 				{
-					// System.out.println("FPS:" + frames);
 					lastTime += 1000;
 					frames = 0;
 				}
@@ -115,4 +114,4 @@ public class Main
 		Main.start();
 	}
 
-}
+}//

@@ -21,16 +21,15 @@ public class Game extends JPanel implements MouseListener
 	private List<Node> path;
 
 	int[][] m0 = { //
-			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, //
-			{ 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 }, //
-			{ 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1 }, //
-			{ 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1 }, //
-			{ 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1 }, //
-			{ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1 }, //
-			{ 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1 }, //
-			{ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1 }, //
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1 }, //
-			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, //
+            { 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, },
+            { 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, },
+            { 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, },
+            { 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, },
+            { 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, },
+            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, },};
 	int[][] m1 = { //
 			{ 0, 0, 0, 0, 0, 0, 0 }, //
 			{ 0, 0, 0, 1, 0, 0, 0 }, //
@@ -40,7 +39,6 @@ public class Game extends JPanel implements MouseListener
 
 	public Game()
 	{
-		// Change this to whatever map you want, and feel free to add more.
 		int[][] m = m0;
 //		int[][] m = m1;
 
@@ -86,7 +84,7 @@ public class Game extends JPanel implements MouseListener
 	@Override
 	public void mouseExited(MouseEvent e)
 	{
-	}
+	} //
 
 	@Override
 	public void mousePressed(MouseEvent e)
@@ -100,7 +98,7 @@ public class Game extends JPanel implements MouseListener
 		}
 		else
 		{
-			System.out.println("Can't walk to that node!");
+			System.out.println("can't walk");
 		}
 	}
 
