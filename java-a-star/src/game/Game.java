@@ -22,25 +22,19 @@ public class Game extends JPanel implements MouseListener
 
 	int[][] m0 = { //
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, //
-            { 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, },
-            { 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, },
-            { 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, },
-            { 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, },
-            { 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, },
-            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, },
-            { 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, },};
-	int[][] m1 = { //
-			{ 0, 0, 0, 0, 0, 0, 0 }, //
-			{ 0, 0, 0, 1, 0, 0, 0 }, //
-			{ 0, 0, 0, 1, 0, 0, 0 }, //
-			{ 0, 0, 0, 1, 0, 0, 0 }, //
-			{ 0, 0, 0, 0, 0, 0, 0 } };
+			{ 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, },
+			{ 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, },
+			{ 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, },
+			{ 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, },
+			{ 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, },
+			{ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, },
+			{ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, },};
 
 	public Game()
 	{
+
 		int[][] m = m0;
-//		int[][] m = m1;
 
 		setPreferredSize(new Dimension(m[0].length * 32, m.length * 32));
 		addMouseListener(this);
@@ -84,7 +78,7 @@ public class Game extends JPanel implements MouseListener
 	@Override
 	public void mouseExited(MouseEvent e)
 	{
-	} //
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e)
@@ -98,7 +92,7 @@ public class Game extends JPanel implements MouseListener
 		}
 		else
 		{
-			System.out.println("can't walk");
+			System.out.println("Can't walk to that node!");
 		}
 	}
 
