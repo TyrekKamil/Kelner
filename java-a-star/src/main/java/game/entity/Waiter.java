@@ -1,13 +1,13 @@
 package game.entity;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import game.astar.Node;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Player
+import java.util.LinkedList;
+import java.util.List;
+
+public class Waiter
 {
 
 	@Getter @Setter
@@ -25,7 +25,7 @@ public class Player
 	private boolean fixing;
 	private List<Node> path;
 
-	public Player(int x, int y)
+	public Waiter(int x, int y)
 	{
 		this.x = x;
 		this.y = y;

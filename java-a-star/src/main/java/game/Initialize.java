@@ -1,13 +1,10 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
-
-public class Main
+public class Initialize
 {
 
 	public static final int WIDTH = 800;
@@ -102,7 +99,7 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		Main.init();
+		Initialize.init();
 
 		JFrame frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(3);
@@ -111,7 +108,7 @@ public class Main
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-		Main.start();
+		Initialize.start();
 	}
 
 }//
