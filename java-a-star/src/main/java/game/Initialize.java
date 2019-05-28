@@ -9,7 +9,7 @@ public class Initialize
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	public static final String NAME = "Kozubal Trilogy";
+	public static final String NAME = "WaiterAI";
 
 	private static BufferedImage image;
 	private static Graphics2D g;
@@ -17,7 +17,7 @@ public class Initialize
 
 	private static Game game;
 
-	private static void init()
+	private static void init() throws InterruptedException
 	{
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
@@ -97,7 +97,7 @@ public class Initialize
 		}
 	}
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		Initialize.init();
 

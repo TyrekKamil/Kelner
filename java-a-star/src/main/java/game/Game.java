@@ -19,7 +19,11 @@ public class Game extends JPanel implements MouseListener
 	private Waiter waiter;
 	private List<Node> path;
 	private Client client;
+	private Client client1;
+	private Client client2;
 	private ArrayList<Point> chairs = new ArrayList<>();
+	List<Client> clients = new ArrayList<Client>();
+
 	// 2 kuchnia
 	// 3 wyjscie
 
@@ -57,7 +61,12 @@ public class Game extends JPanel implements MouseListener
 
 		map = new Map(m);
 		waiter = new Waiter(0, 1);
-		client = new Client(2, 2);
+		client = new Client(1, 8);
+
+		client1 = new Client(2, 8);
+
+		client2 = new Client(0, 7);
+
 
 	}
 
@@ -65,6 +74,8 @@ public class Game extends JPanel implements MouseListener
 	{
 		waiter.update();
 		client.update();
+		client1.update();
+		client2.update();
 	}
 
 	public void render(Graphics2D g)
@@ -85,6 +96,13 @@ public class Game extends JPanel implements MouseListener
 
 		g.setColor(Color.YELLOW);
 		g.fillRect(client.getX() * 32 + client.getSx(), client.getY() * 32 + client.getSy(), 32, 32);
+
+		g.setColor(Color.BLUE);
+		g.fillRect(client1.getX() * 32 + client1.getSx(), client1.getY() * 32 + client1.getSy(), 32, 32);
+
+		g.setColor(Color.GREEN);
+		g.fillRect(client2.getX() * 32 + client2.getSx(), client2.getY() * 32 + client2.getSy(), 32, 32);
+
 	}
 
 	@Override
@@ -127,10 +145,43 @@ public class Game extends JPanel implements MouseListener
 
 	// wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
 	public void clientPath(){
+		while(true)
+		{
+			if (client.getX() == 4 && client.getY() ==3 || client1.getX() ==4 && client1.getY() == 3)
+			{
+				break;
+			}
+			else if (client.getX() == 8 && client.getY() ==3 || client1.getX() == 8 && client1.getY() ==3)
+			{
+				break;
+			}
+			else if (client.getX() == 12 && client.getY() ==3 || client1.getX() == 12 && client1.getY() ==3)
+			{
+				break;
+			}
+			else if (client.getX() == 4 && client.getY() ==7 || client1.getX() == 4 && client1.getY() ==7)
+			{
+				break;
+			}
+			else if (client.getX() == 8 && client.getY() ==7 || client1.getX() == 8 && client1.getY() ==7)
+			{
+				break;
+			}
+			else if (client.getX() == 12 && client.getY() ==7 || client1.getX() == 12 && client1.getY() ==7)
+			{
+				break;
+			}
+			Point tableChoice = client.chooseTable(chairs);
+			path = map.findPath(client.getX(), client.getY(), tableChoice.x, tableChoice.y);
+			client.followPath(path);
+			Point tableChoice1 = client1.chooseTable(chairs);
+			path = map.findPath(client1.getX(), client1.getY(), tableChoice1.x, tableChoice1.y);
+			client1.followPath(path);
+			Point tableChoice2 = client2.chooseTable(chairs);
+			path = map.findPath(client2.getX(), client2.getY(), tableChoice2.x, tableChoice2.y);
+			client2.followPath(path);
 
-		Point tableChoice = client.chooseTable(chairs);
-		path = map.findPath(client.getX(), client.getY(), tableChoice.x, tableChoice.y);
-		client.followPath(path);
+		}
 	}
 
 }
