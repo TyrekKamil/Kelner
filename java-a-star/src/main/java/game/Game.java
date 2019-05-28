@@ -29,6 +29,7 @@ public class Game extends JPanel implements MouseListener
 	private ArrayList<Point> chairs = new ArrayList<>();
 	private ArrayList<Point> chairsTaken = new ArrayList<>();
 	private ArrayList<Client> listOfClients = new ArrayList<>();
+	int clientServed = 0;
 
 	// 2 kuchnia
 	// 3 wyjscie
@@ -43,8 +44,6 @@ public class Game extends JPanel implements MouseListener
 			{ 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
 			{ 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },};
-
-
 
 	public Game()
 	{
@@ -71,7 +70,6 @@ public class Game extends JPanel implements MouseListener
 		client6 = new Client(0, 8);
 		Collections.addAll(listOfClients, client1, client2, client3, client4, client5, client6);
 		placeClientsInOrder();
-
 	}
 
 	public void update()
@@ -164,17 +162,25 @@ public class Game extends JPanel implements MouseListener
 	}
 
 	private void placeClientsInOrder(){
-		for (Client client: listOfClients) {
-			clientPath(client);
+		for (Client cl: listOfClients) {
+			while (true){
+				if(chairsTaken.size() < 6) {
+					clientPath(cl);
+					break;
+				}
+			}
+
 		}
 	}
 
 
-	private void clientArrived(Client cl) {
-		callWaiter(client3);
+	private void clientArrived(Point cl) {
+		callWaiter(cl);
 		waiterPlacesOrder();
 		waiterBringsFood();
-//		clientLeaves(client);
+		clientLeaves(cl);
+		clientServed++;
+		System.out.println("served client: " + clientServed);
 	}
 
 	private void waiterBringsFood() {
@@ -184,27 +190,25 @@ public class Game extends JPanel implements MouseListener
 	}
 
 	// wywolanie follow path do klienta
-	private void callWaiter(Client client) {
-		path = map.findPath(waiter.getX(), waiter.getY(), client.getX()+1, client.getY());
+	private void callWaiter(Point client) {
+		path = map.findPath(waiter.getX(), waiter.getY(), (int) client.getX() -1, (int) client.getY());
 		waiter.followPath(path);
 	}
 
 	// logika na odejscie - cos na ostatnich klientach sie wyjebuje mimo dodania, do przemyslenia kolejkowanie i client path
-	private void clientLeaves(Client client) {
-		chairs.add(new Point(client.getX(), client.getY()));
+	private void clientLeaves(Point client) {
+		chairs.add(client);
+		chairsTaken.remove(client);
 	}
 
 	// wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
 	private void clientPath(Client currentClient){
-		if(chairs.size()>=1) {
 			Point tableChoice = currentClient.chooseTable(chairs);
 			path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
 			currentClient.followPath(path);
 			chairs.remove(tableChoice);
 			chairsTaken.add(tableChoice);
-			clientArrived(currentClient);
-			update();
-		}
+			clientArrived(tableChoice);
 	}
 
 }
