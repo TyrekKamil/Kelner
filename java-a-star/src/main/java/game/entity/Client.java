@@ -32,7 +32,7 @@ public class Client {
         this.y = y;
         sx = 0;
         sy = 0;
-        speed = 4;
+        speed = 1;
 
         walking = false;
         fixing = false;
@@ -150,53 +150,12 @@ public class Client {
     // wybranie stolika randomowego z listy, i wysyla ze do niego idzie
     public Point chooseTable(ArrayList<Point> chairs) {
         Random ran = new Random();
-        int randomNumber = ran.ints(1, 0, 6).findFirst().getAsInt();
-        Point tableChoice = chairs.get(randomNumber-1);
-        ArrayList<Point> chairsTaken = new ArrayList<>();
-        System.out.println("Client goes to tile number: " + chairs.get(randomNumber -1));
-        chairsTaken.add(chairs.get(randomNumber -1));
-        System.out.println("Chairs taken: " + chairsTaken);
+        int randomNumber = ran.ints(1, 0, chairs.size()).findFirst().getAsInt();
+        Point tableChoice = chairs.get(randomNumber);
+        System.out.println("Client goes to tile number: " + chairs.get(randomNumber));
         System.out.println("Chairs free:" + chairs);
-        chairs.remove(randomNumber -1);
+        chairs.remove(randomNumber);
         return tableChoice;
     }
-    public int getX()
-    {
-        return x;
-    }
 
-    public void setX(int x)
-    {
-        this.x = x;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
-
-    public void setY(int y)
-    {
-        this.y = y;
-    }
-
-    public int getSx()
-    {
-        return sx;
-    }
-
-    public void setSx(int sx)
-    {
-        this.sx = sx;
-    }
-
-    public int getSy()
-    {
-        return sy;
-    }
-
-    public void setSy(int sy)
-    {
-        this.sy = sy;
-    }
 }
