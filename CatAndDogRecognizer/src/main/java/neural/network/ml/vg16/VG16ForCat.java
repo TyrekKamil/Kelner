@@ -24,8 +24,8 @@ public class VG16ForCat {
     private static ComputationGraph computationGraph;
 
     public static void main(String[] args) throws IOException {
-        new VG16ForCat().runOnTestSet();
-//        new VG16ForCat().runOnDevSet();
+//        new VG16ForCat().runOnTestSet();
+        new VG16ForCat().runOnDevSet();
     }
 
 

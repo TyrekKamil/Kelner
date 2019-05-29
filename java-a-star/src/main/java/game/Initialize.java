@@ -1,18 +1,15 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
-
-public class Main
+public class Initialize
 {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	public static final String NAME = "Kozubal Trilogy";
+	public static final String NAME = "WaiterAI";
 
 	private static BufferedImage image;
 	private static Graphics2D g;
@@ -20,7 +17,7 @@ public class Main
 
 	private static Game game;
 
-	private static void init()
+	private static void init() throws InterruptedException
 	{
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
@@ -100,9 +97,9 @@ public class Main
 		}
 	}
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
-		Main.init();
+		Initialize.init();
 
 		JFrame frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(3);
@@ -111,7 +108,7 @@ public class Main
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-		Main.start();
+		Initialize.start();
 	}
 
 }//

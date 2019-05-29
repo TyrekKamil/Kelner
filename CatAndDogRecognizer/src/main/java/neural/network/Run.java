@@ -13,9 +13,7 @@ import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.zip.Adler32;
 
-/**
- * Created by klevis.ramo on 1/1/2018.
- */
+
 public class Run {
 
     private static final String MODEL_URL = "https://dl.dropboxusercontent.com/s/djmh91tk1bca4hz/RunEpoch_class_2_soft_10_32_1800.zip?dl=0";
