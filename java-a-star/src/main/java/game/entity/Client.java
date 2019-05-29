@@ -32,7 +32,7 @@ public class Client {
         this.y = y;
         sx = 0;
         sy = 0;
-        speed = 1;
+        speed = 2;
 
         walking = false;
         fixing = false;
@@ -153,7 +153,6 @@ public class Client {
         int randomNumber = ran.ints(1, 0, chairs.size()).findFirst().getAsInt();
         Point tableChoice = chairs.get(randomNumber);
         System.out.println("Client goes to tile number: " + chairs.get(randomNumber));
-        System.out.println("Chairs free:" + chairs);
         chairs.remove(randomNumber);
         return tableChoice;
     }

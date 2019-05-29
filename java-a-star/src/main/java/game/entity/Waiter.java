@@ -1,3 +1,4 @@
+
 package game.entity;
 
 import game.astar.Node;
@@ -46,7 +47,7 @@ public class Waiter
 		}
 		if (walking)
 		{
-  			walk();
+			walk();
 		}
 	}
 
