@@ -164,7 +164,7 @@ public class Game extends JPanel implements MouseListener
 	private void placeClientsInOrder(){
 		for (Client cl: listOfClients) {
 			while (true){
-				if(chairsTaken.size() < 6) {
+				if(chairsTaken.size() <= 6) {
 					clientPath(cl);
 					break;
 				}
@@ -178,10 +178,11 @@ public class Game extends JPanel implements MouseListener
 		callWaiter(cl);
 		waiterPlacesOrder();
 		waiterBringsFood();
-		clientLeaves(cl);
+//		clientLeaves(cl, client);
 		clientServed++;
 		System.out.println("served client: " + clientServed);
 	}
+
 
 	private void waiterBringsFood() {
 	}
@@ -192,23 +193,28 @@ public class Game extends JPanel implements MouseListener
 	// wywolanie follow path do klienta
 	private void callWaiter(Point client) {
 		path = map.findPath(waiter.getX(), waiter.getY(), (int) client.getX() -1, (int) client.getY());
+		System.out.println("visited client: " + client + "at position: " + client.getX() + " " + client.getY());
 		waiter.followPath(path);
+		update();
 	}
 
 	// logika na odejscie - cos na ostatnich klientach sie wyjebuje mimo dodania, do przemyslenia kolejkowanie i client path
-	private void clientLeaves(Point client) {
+	private void clientLeaves(Point client, Client cl) {
+		path = map.findPath(cl.getX(), cl.getY(), 0, 1);
 		chairs.add(client);
 		chairsTaken.remove(client);
+		update();
 	}
 
 	// wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
-	private void clientPath(Client currentClient){
-			Point tableChoice = currentClient.chooseTable(chairs);
-			path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
-			currentClient.followPath(path);
-			chairs.remove(tableChoice);
-			chairsTaken.add(tableChoice);
-			clientArrived(tableChoice);
+	private void clientPath(Client currentClient) {
+		Point tableChoice = currentClient.chooseTable(chairs);
+		chairs.remove(tableChoice);
+		System.out.println("Chairs free:" + chairs);
+		path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
+		currentClient.followPath(path);
+		chairsTaken.add(tableChoice);
+		clientArrived(tableChoice);
 	}
 
 }

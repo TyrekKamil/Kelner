@@ -153,7 +153,6 @@ public class Client {
         int randomNumber = ran.ints(1, 0, chairs.size()).findFirst().getAsInt();
         Point tableChoice = chairs.get(randomNumber);
         System.out.println("Client goes to tile number: " + chairs.get(randomNumber));
-        System.out.println("Chairs free:" + chairs);
         chairs.remove(randomNumber);
         return tableChoice;
     }
