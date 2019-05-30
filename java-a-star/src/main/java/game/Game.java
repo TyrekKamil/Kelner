@@ -164,7 +164,7 @@ public class Game extends JPanel implements MouseListener
 	private void placeClientsInOrder(){
 		for (Client cl: listOfClients) {
 			while (true){
-				if(chairsTaken.size() < 6) {
+				if(chairsTaken.size() <= 6 && chairs.size() >=1) {
 					clientPath(cl);
 					break;
 				}
@@ -194,15 +194,15 @@ public class Game extends JPanel implements MouseListener
 		path = map.findPath(waiter.getX(), waiter.getY(), (int) client.getX() -1, (int) client.getY());
 		System.out.println("visited client: " + client + "at position: " + client.getX() + " " + client.getY());
 		waiter.followPath(path);
-		update();
 	}
 
 	// logika na odejscie - cos na ostatnich klientach sie wyjebuje mimo dodania, do przemyslenia kolejkowanie i client path
 	private void clientLeaves(Point client, Client cl) {
 		path = map.findPath(cl.getX(), cl.getY(), 0, 1);
+		cl.followPath(path);
 		chairs.add(client);
 		chairsTaken.remove(client);
-		update();
+		System.out.println("client: " + client.getX() + " " +client.getY() + " has left");
 	}
 
 	// wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
