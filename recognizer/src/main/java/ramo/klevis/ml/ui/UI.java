@@ -1,7 +1,7 @@
 package ramo.klevis.ml.ui;
 
 import ramo.klevis.ml.vg16.FoodType;
-import ramo.klevis.ml.vg16.VG16ForCat;
+import ramo.klevis.ml.vg16.VG16;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class UI {
     private static final int FRAME_HEIGHT = 600;
     private ImagePanel sourceImagePanel;
     private JLabel predictionResponse;
-    private VG16ForCat vg16ForCat;
+    private VG16 vg16;
     private File selectedFile;
     private SpinnerNumberModel modelThresholdSize;
     private JSpinner thresholdField;
@@ -40,8 +40,8 @@ public class UI {
 
     public void initUI() throws Exception {
 
-        vg16ForCat = new VG16ForCat();
-        vg16ForCat.loadModel();
+        vg16 = new VG16();
+        vg16.loadModel();
         // create main frame
         mainFrame = createMainFrame();
 
@@ -57,7 +57,7 @@ public class UI {
         JButton predictButton = new JButton("What type of food?");
         predictButton.addActionListener(e -> {
             try {
-                FoodType foodType = vg16ForCat.detectBurger(selectedFile, (Double) thresholdField.getValue());
+                FoodType foodType = vg16.detectBurger(selectedFile, (Double) thresholdField.getValue());
                 if (foodType == FoodType.PIZZA) {
                     predictionResponse.setText("It is a Pizza");
                     predictionResponse.setForeground(Color.GREEN);
