@@ -68,7 +68,7 @@ public class Game extends JPanel implements MouseListener
 		client4 = new Client(0, 8);
 		client5 = new Client(0, 8);
 		client6 = new Client(0, 8);
-		Collections.addAll(listOfClients, client1, client2, client3, client4, client5, client6);
+		Collections.addAll(listOfClients, client, client1, client2, client3, client4, client5, client6);
 		placeClientsInOrder();
 	}
 
@@ -164,12 +164,11 @@ public class Game extends JPanel implements MouseListener
 	private void placeClientsInOrder(){
 		for (Client cl: listOfClients) {
 			while (true){
-				if(chairsTaken.size() <= 6) {
+				if(chairsTaken.size() < 6) {
 					clientPath(cl);
 					break;
 				}
 			}
-
 		}
 	}
 
@@ -178,7 +177,7 @@ public class Game extends JPanel implements MouseListener
 		callWaiter(cl);
 		waiterPlacesOrder();
 		waiterBringsFood();
-//		clientLeaves(cl, client);
+		clientLeaves(cl, client);
 		clientServed++;
 		System.out.println("served client: " + clientServed);
 	}
