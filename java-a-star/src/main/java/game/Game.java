@@ -173,11 +173,12 @@ public class Game extends JPanel implements MouseListener
 	}
 
 
-	private void clientArrived(Point cl) {
-		callWaiter(cl);
+	private void clientArrived(Point cl, Client currentClient) {
+		if(chairsTaken.size() >= 1)
+			callWaiter(cl);
 		waiterPlacesOrder();
 		waiterBringsFood();
-		clientLeaves(cl, client);
+		clientLeaves(cl, currentClient);
 		clientServed++;
 		System.out.println("served client: " + clientServed);
 	}
@@ -203,6 +204,7 @@ public class Game extends JPanel implements MouseListener
 		chairs.add(client);
 		chairsTaken.remove(client);
 		System.out.println("client: " + client.getX() + " " +client.getY() + " has left");
+		update();
 	}
 
 	// wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
@@ -213,7 +215,7 @@ public class Game extends JPanel implements MouseListener
 		path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
 		currentClient.followPath(path);
 		chairsTaken.add(tableChoice);
-		clientArrived(tableChoice);
+		clientArrived(tableChoice, currentClient);
 	}
 
 }

@@ -31,7 +31,7 @@ public class Waiter
 		this.y = y;
 		sx = 0;
 		sy = 0;
-		speed = 2;
+		speed = 4;
 
 		walking = false;
 		fixing = false;
