@@ -36,9 +36,7 @@ import java.net.URL;
 import java.util.Random;
 import java.util.zip.Adler32;
 
-/**
- * Created by klevis.ramo on 12/26/2017.
- */
+
 public class TrainImageNetVG16 {
 
     private static final Logger LOGGER = org.slf4j.LoggerFactory.getLogger(TrainImageNetVG16.class);
@@ -75,10 +73,8 @@ public class TrainImageNetVG16 {
 
     public static void main(String[] args) throws IOException {
         ZooModel zooModel = new VGG16();
-        LOGGER.info("Start Downloading VGG16 model...");
         ComputationGraph preTrainedNet = (ComputationGraph) zooModel.initPretrained(PretrainedType.IMAGENET);
         LOGGER.info(preTrainedNet.summary());
-        // Define the File Paths
         File trainData = new File(TRAIN_FOLDER);
         File testData = new File(TEST_FOLDER);
         FileSplit train = new FileSplit(trainData, NativeImageLoader.ALLOWED_FORMATS, RAND_NUM_GEN);

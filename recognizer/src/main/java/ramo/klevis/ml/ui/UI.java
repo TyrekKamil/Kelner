@@ -15,9 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by klevis.ramo on 1/1/2018.
- */
+
 public class UI {
 
     private static final double THRESHOLD_ACCURACY = 0.50;

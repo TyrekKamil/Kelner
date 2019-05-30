@@ -13,9 +13,7 @@ import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.zip.Adler32;
 
-/**
- * Created by klevis.ramo on 1/1/2018.
- */
+
 public class Run {
 
     private static final String MODEL_URL = "https://drive.google.com/uc?export=download&confirm=v-b4&id=1Le8UGwofY0_o8fdpoYsni4CHyLYcdOFt";

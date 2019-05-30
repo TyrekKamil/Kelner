@@ -3,9 +3,6 @@ package ramo.klevis.ml.ui;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by klevis.ramo on 11/29/2017.
- */
 public class ProgressBar {
 
     private final JFrame mainFrame;

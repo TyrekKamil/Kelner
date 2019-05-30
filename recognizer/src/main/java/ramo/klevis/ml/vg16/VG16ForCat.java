@@ -15,9 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-/**
- * Created by klevis.ramo on 12/28/2017.
- */
+
 public class VG16ForCat {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(TrainImageNetVG16.class);
     private static final String TRAINED_PATH_MODEL = TrainImageNetVG16.DATA_PATH + "/model.zip";
