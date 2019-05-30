@@ -16,13 +16,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 
-public class VG16ForCat {
+public class VG16 {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(TrainImageNetVG16.class);
     private static final String TRAINED_PATH_MODEL = TrainImageNetVG16.DATA_PATH + "/model.zip";
     private static ComputationGraph computationGraph;
 
     public static void main(String[] args) throws IOException {
-        new VG16ForCat().runOnTestSet();
+        new VG16().runOnTestSet();
     }
 
 
