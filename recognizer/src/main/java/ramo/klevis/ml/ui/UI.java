@@ -18,12 +18,11 @@ import java.io.InputStream;
 
 public class UI {
 
-    private static final double THRESHOLD_ACCURACY = 0.50;
+    private static final double THRESHOLD_ACCURACY = 0.60;
     private JFrame mainFrame;
     private JPanel mainPanel;
     private static final int FRAME_WIDTH = 800;
     private static final int FRAME_HEIGHT = 600;
-    private ImagePanel sourceImagePanel;
     private JLabel predictionResponse;
     private VG16 vg16;
     private File selectedFile;
@@ -82,8 +81,6 @@ public class UI {
 
         fillMainPanel(chooseButton, predictButton);
 
-        addSignature();
-
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         mainFrame.setVisible(true);
 
@@ -111,8 +108,6 @@ public class UI {
         c.gridy = 2;
         c.weighty = 1;
         c.weightx = 1;
-        sourceImagePanel = new ImagePanel();
-        mainPanel.add(sourceImagePanel, c);
 
         c.gridx = 1;
         c.gridy = 3;
@@ -129,18 +124,8 @@ public class UI {
         chooser.setCurrentDirectory(new File(new File("resources").getAbsolutePath()));
         int action = chooser.showOpenDialog(null);
         if (action == JFileChooser.APPROVE_OPTION) {
-            try {
-                selectedFile = chooser.getSelectedFile();
-                showSelectedImageOnPanel(new FileInputStream(selectedFile), sourceImagePanel);
-            } catch (IOException e1) {
-                throw new RuntimeException(e1);
-            }
+            selectedFile = chooser.getSelectedFile();
         }
-    }
-
-    private void showSelectedImageOnPanel(InputStream selectedFile, ImagePanel imagePanel) throws IOException {
-        BufferedImage bufferedImage = ImageIO.read(selectedFile);
-        imagePanel.setImage(bufferedImage);
     }
 
 
@@ -162,10 +147,4 @@ public class UI {
         return mainFrame;
     }
 
-    private void addSignature() {
-        JLabel signature = new JLabel("branch jkozubal najlepszy jest(byl)", JLabel.HORIZONTAL);
-        signature.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 20));
-        signature.setForeground(Color.BLUE);
-        mainFrame.add(signature, BorderLayout.SOUTH);
-    }
 }
