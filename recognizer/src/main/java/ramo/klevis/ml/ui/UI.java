@@ -1,6 +1,7 @@
 package ramo.klevis.ml.ui;
 
 import ramo.klevis.ml.vg16.FoodType;
+import ramo.klevis.ml.vg16.TrainImageNetVG16;
 import ramo.klevis.ml.vg16.VG16;
 
 import javax.imageio.ImageIO;
@@ -14,11 +15,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 
 
 public class UI {
 
-    private static final double THRESHOLD_ACCURACY = 0.60;
     private JFrame mainFrame;
     private JPanel mainPanel;
     private static final int FRAME_WIDTH = 800;
@@ -47,11 +48,9 @@ public class UI {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
 
-        JButton chooseButton = new JButton("Choose Food image");
-        chooseButton.addActionListener(e -> {
-            chooseFileAction();
-            predictionResponse.setText("");
-        });
+
+        chooseFile(TrainImageNetVG16.DATA_PATH + "/pizza1.jpg");
+
 
         JButton predictButton = new JButton("What type of food?");
         predictButton.addActionListener(e -> {
@@ -79,14 +78,14 @@ public class UI {
             }
         });
 
-        fillMainPanel(chooseButton, predictButton);
+        fillMainPanel(predictButton);
 
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         mainFrame.setVisible(true);
 
     }
 
-    private void fillMainPanel(JButton chooseButton, JButton predictButton) throws IOException {
+    private void fillMainPanel(JButton predictButton) throws IOException {
         GridBagConstraints c = new GridBagConstraints();
 
         c.gridx = 1;
@@ -94,16 +93,9 @@ public class UI {
         c.weighty = 0;
         c.weightx = 0;
         JPanel buttonsPanel = new JPanel(new FlowLayout());
-        buttonsPanel.add(chooseButton);
         buttonsPanel.add(predictButton);
         mainPanel.add(buttonsPanel, c);
 
-        c.gridx = 1;
-        c.gridy = 2;
-        c.weighty = 1;
-        c.weightx = 1;
-
-        c.gridx = 1;
         c.gridy = 3;
         c.weighty = 0;
         c.weightx = 0;
@@ -113,13 +105,10 @@ public class UI {
     }
 
 
-    public void chooseFileAction() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File(new File("resources").getAbsolutePath()));
-        int action = chooser.showOpenDialog(null);
-        if (action == JFileChooser.APPROVE_OPTION) {
-            selectedFile = chooser.getSelectedFile();
-        }
+    public File chooseFile(String filePath) {
+        File file = new File(filePath);
+        selectedFile = file;
+        return selectedFile;
     }
 
 
