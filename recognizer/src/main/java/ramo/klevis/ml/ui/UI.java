@@ -56,7 +56,7 @@ public class UI {
         JButton predictButton = new JButton("What type of food?");
         predictButton.addActionListener(e -> {
             try {
-                FoodType foodType = vg16.detectBurger(selectedFile, (Double) thresholdField.getValue());
+                FoodType foodType = vg16.detectBurger(selectedFile, 0.6);
                 if (foodType == FoodType.PIZZA) {
                     predictionResponse.setText("It is a Pizza");
                     predictionResponse.setForeground(Color.GREEN);
@@ -94,12 +94,6 @@ public class UI {
         c.weighty = 0;
         c.weightx = 0;
         JPanel buttonsPanel = new JPanel(new FlowLayout());
-        modelThresholdSize = new SpinnerNumberModel(THRESHOLD_ACCURACY, 0.5, 1, 0.1);
-        thresholdField = new JSpinner(modelThresholdSize);
-        JLabel label = new JLabel("Threshold Accuracy %");
-        label.setFont(sansSerifBold);
-        buttonsPanel.add(label);
-        buttonsPanel.add(thresholdField);
         buttonsPanel.add(chooseButton);
         buttonsPanel.add(predictButton);
         mainPanel.add(buttonsPanel, c);
