@@ -4,18 +4,14 @@ import ramo.klevis.ml.vg16.FoodType;
 import ramo.klevis.ml.vg16.TrainImageNetVG16;
 import ramo.klevis.ml.vg16.VG16;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Paths;
+
 
 
 public class UI {
@@ -27,9 +23,6 @@ public class UI {
     private JLabel predictionResponse;
     private VG16 vg16;
     private File selectedFile;
-    private SpinnerNumberModel modelThresholdSize;
-    private JSpinner thresholdField;
-    private final Font sansSerifBold = new Font("SansSerif", Font.BOLD, 18);
 
     public UI() throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -124,9 +117,6 @@ public class UI {
                 System.exit(0);
             }
         });
-        ImageIcon imageIcon = new ImageIcon("icon.png");
-        mainFrame.setIconImage(imageIcon.getImage());
-
         return mainFrame;
     }
 
