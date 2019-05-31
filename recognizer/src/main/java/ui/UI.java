@@ -30,19 +30,29 @@ public class UI {
 
     public void initUI() throws Exception {
 
-        vg16 = new VG16();
-        vg16.loadModel();
+
         mainFrame = createMainFrame();
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
 
-
-        chooseFile(TrainImageNetVG16.DATA_PATH + "/pizza1.jpg");
-
+        File foodPicture = new File(TrainImageNetVG16.DATA_PATH + "/burger1.jpg");
         fillMainPanel();
+        recogniseFood(foodPicture);
+
+        mainPanel.updateUI();
+
+
+
+        mainFrame.add(mainPanel, BorderLayout.CENTER);
+        mainFrame.setVisible(true);
+
+    }
+    private void recogniseFood(File food) throws Exception {
+        vg16 = new VG16();
+        vg16.loadModel();
         try {
-            FoodType foodType = vg16.detectBurger(selectedFile, 0.6);
+            FoodType foodType = vg16.detectBurger(food, 0.6);
             if (foodType == FoodType.PIZZA) {
                 predictionResponse.setText("It is a Pizza");
                 predictionResponse.setForeground(Color.GREEN);
@@ -59,17 +69,11 @@ public class UI {
                 predictionResponse.setText("Not Sure...");
                 predictionResponse.setForeground(Color.RED);
             }
-            mainPanel.updateUI();
-        } catch (IOException e1) {
+        }
+        catch (IOException e1) {
             throw new RuntimeException(e1);
         }
-
-
-        mainFrame.add(mainPanel, BorderLayout.CENTER);
-        mainFrame.setVisible(true);
-
     }
-
     private void fillMainPanel() throws IOException {
         GridBagConstraints c = new GridBagConstraints();
 
@@ -79,13 +83,6 @@ public class UI {
         predictionResponse = new JLabel();
         predictionResponse.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 72));
         mainPanel.add(predictionResponse, c);
-    }
-
-
-    public File chooseFile(String filePath) {
-        File file = new File(filePath);
-        selectedFile = file;
-        return selectedFile;
     }
 
 
