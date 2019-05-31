@@ -21,7 +21,6 @@ public class UI {
     private static final int FRAME_HEIGHT = 150;
     private JLabel predictionResponse;
     private VG16 vg16;
-    private File selectedFile;
 
     public UI() throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -42,8 +41,6 @@ public class UI {
 
         mainPanel.updateUI();
 
-
-
         mainFrame.add(mainPanel, BorderLayout.CENTER);
         mainFrame.setVisible(true);
 
@@ -54,16 +51,16 @@ public class UI {
         try {
             FoodType foodType = vg16.detectBurger(food, 0.6);
             if (foodType == FoodType.PIZZA) {
-                predictionResponse.setText("It is a Pizza");
+                predictionResponse.setText("Pizza");
                 predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.BURGER) {
-                predictionResponse.setText("It is a Burger");
+                predictionResponse.setText("Burger");
                 predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.SALAD) {
-                predictionResponse.setText("It is a Salad");
+                predictionResponse.setText("Salad");
                 predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.SPAGHETTI) {
-                predictionResponse.setText("It is a Spaghetti");
+                predictionResponse.setText("Spaghetti");
                 predictionResponse.setForeground(Color.GREEN);
             } else {
                 predictionResponse.setText("Not Sure...");
@@ -100,5 +97,4 @@ public class UI {
         });
         return mainFrame;
     }
-
 }
