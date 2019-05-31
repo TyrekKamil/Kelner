@@ -112,7 +112,10 @@ public class Initialize
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		clientsArriveScheduler scheduler = new clientsArriveScheduler();
+		scheduler.start();
 		start();
+
 
 	}
 

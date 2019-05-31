@@ -5,7 +5,6 @@ import game.astar.Map;
 import game.astar.Node;
 import game.entity.Client;
 import game.entity.Waiter;
-import game.quartz.scheduler.clientsArriveScheduler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,8 +69,6 @@ public class Game extends JPanel implements MouseListener {
 		client5 = new Client(0, 8);
 		client6 = new Client(0, 8);
 		Collections.addAll(listOfClients, client, client1, client2, client3, client4, client5, client6);
-		clientsArriveScheduler scheduler = new clientsArriveScheduler();
-		scheduler.start();
 	}
 
 	public void update() {
@@ -163,10 +160,12 @@ public class Game extends JPanel implements MouseListener {
 	}
 
 	public void placeClientInOrder() {
-				Client cl = listOfClients.get(0);
+				Client cl = this.listOfClients.get(1);
 				if (chairsTaken.size() <= 6 && chairs.size() >= 1) {
 					clientPath(cl);
-					listOfClients.remove(cl);
+					System.out.println("test" + this.listOfClients.size());
+					this.listOfClients.remove(cl);
+
 			}
 	}
 
