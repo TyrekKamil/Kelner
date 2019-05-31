@@ -1,7 +1,5 @@
-package ramo.klevis;
-
-import ramo.klevis.ml.ui.ProgressBar;
-import ramo.klevis.ml.ui.UI;
+import ui.ProgressBar;
+import ui.UI;
 
 import javax.swing.*;
 import java.util.concurrent.Executors;

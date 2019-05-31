@@ -1,4 +1,4 @@
-package ramo.klevis.ml.vg16;
+package vg16;
 
 import org.datavec.api.split.FileSplit;
 import org.datavec.api.split.InputSplit;

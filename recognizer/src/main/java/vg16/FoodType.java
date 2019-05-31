@@ -1,4 +1,4 @@
-package ramo.klevis.ml.vg16;
+package vg16;
 
 public enum FoodType {
     PIZZA,

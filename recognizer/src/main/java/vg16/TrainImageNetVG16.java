@@ -1,4 +1,4 @@
-package ramo.klevis.ml.vg16;
+package vg16;
 
 import org.apache.ant.compress.taskdefs.Unzip;
 import org.apache.commons.io.FileUtils;

@@ -1,4 +1,4 @@
-package ramo.klevis.ml.ui;
+package ui;
 
 import javax.swing.*;
 import java.awt.*;
