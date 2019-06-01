@@ -156,5 +156,43 @@ public class Client {
         chairs.remove(randomNumber);
         return tableChoice;
     }
+    public int getX()
+    {
+        return x;
+    }
 
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+
+    public int getY()
+    {
+        return y;
+    }
+
+    public void setY(int y)
+    {
+        this.y = y;
+    }
+
+    public int getSx()
+    {
+        return sx;
+    }
+
+    public void setSx(int sx)
+    {
+        this.sx = sx;
+    }
+
+    public int getSy()
+    {
+        return sy;
+    }
+
+    public void setSy(int sy)
+    {
+        this.sy = sy;
+    }
 }

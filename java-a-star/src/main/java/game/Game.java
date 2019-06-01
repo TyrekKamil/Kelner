@@ -8,13 +8,11 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Game extends JPanel implements MouseListener {
+public class Game extends JPanel{
 
     int clientServed = 0;
     int[][] m0 = { //
@@ -57,7 +55,6 @@ public class Game extends JPanel implements MouseListener {
         int[][] m = m0;
 
         setPreferredSize(new Dimension(m[0].length * 32, m.length * 32));
-        addMouseListener(this);
 
         map = new Map(m);
         waiter = new Waiter(0, 1);
@@ -124,34 +121,7 @@ public class Game extends JPanel implements MouseListener {
 
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        int mx = e.getX() / 32;
-        int my = e.getY() / 32;
-        if (map.getNode(mx, my).isWalkable()) {
-            path = map.findPath(waiter.getX(), waiter.getY(), mx, my);
-            waiter.followPath(path);
-        } else {
-            System.out.println("Can't walk to that node!");
-        }
-        // na ten moment na pale odpalane zeby bylo widac ze idzie tam skurwysyn
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
 
     public void placeClientInOrder() {
         try {
@@ -182,7 +152,6 @@ public class Game extends JPanel implements MouseListener {
             Thread.currentThread().interrupt();
         }
 
-        clientLeaves(cl, currentClient);
         clientServed++;
         System.out.println("served client: " + clientServed);
     }
@@ -211,6 +180,7 @@ public class Game extends JPanel implements MouseListener {
     }
 
     // logika na odejscie - cos na ostatnich klientach sie wyjebuje mimo dodania, do przemyslenia kolejkowanie i client path
+    /*
     private void clientLeaves(Point client, Client cl) {
         path = map.findPath(cl.getY(), cl.getY(), 0, 1);
         cl.followPath(path);
@@ -219,15 +189,17 @@ public class Game extends JPanel implements MouseListener {
         System.out.println("client: " + client.getX() + " " + client.getY() + " has left");
         update();
     }
+    */
 
     // wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
     private void clientPath(Client currentClient) {
         Point tableChoice = currentClient.chooseTable(chairs);
         chairs.remove(tableChoice);
-        System.out.println("Chairs free:" + chairs);
+        System.out.printf("Chairs free:%s%n", chairs);
         path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
         currentClient.followPath(path);
         chairsTaken.add(tableChoice);
+        System.out.printf("Chairs taken:%s%n", chairsTaken);
 		/*currentClient.setX(tableChoice.x);
 		currentClient.setY(tableChoice.y);*/
         clientArrived(tableChoice, currentClient);
