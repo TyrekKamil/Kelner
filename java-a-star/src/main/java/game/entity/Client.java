@@ -33,7 +33,6 @@ public class Client {
         sx = 0;
         sy = 0;
         speed = 2;
-
         walking = false;
         fixing = false;
         path = null;
