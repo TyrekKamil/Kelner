@@ -45,26 +45,30 @@ public class UI {
         mainFrame.setVisible(true);
 
     }
-    private void recogniseFood(File food) throws Exception {
+    public void recogniseFood(File food) throws Exception {
         vg16 = new VG16();
         vg16.loadModel();
         try {
             FoodType foodType = vg16.detectBurger(food, 0.6);
             if (foodType == FoodType.PIZZA) {
-                predictionResponse.setText("Pizza");
-                predictionResponse.setForeground(Color.GREEN);
+//                predictionResponse.setText("Pizza");
+                System.out.println("Pizza");
+//                predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.BURGER) {
-                predictionResponse.setText("Burger");
-                predictionResponse.setForeground(Color.GREEN);
+//                predictionResponse.setText("Burger");
+                System.out.println("burger");
+//                predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.SALAD) {
-                predictionResponse.setText("Salad");
-                predictionResponse.setForeground(Color.GREEN);
+//                predictionResponse.setText("Salad");
+                System.out.println("salad");
+//                predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.SPAGHETTI) {
-                predictionResponse.setText("Spaghetti");
-                predictionResponse.setForeground(Color.GREEN);
+//                predictionResponse.setText("Spaghetti");4
+                System.out.println("spaghetti");
+//                predictionResponse.setForeground(Color.GREEN);
             } else {
-                predictionResponse.setText("Not Sure...");
-                predictionResponse.setForeground(Color.RED);
+//                predictionResponse.setText("Not Sure...");
+//                predictionResponse.setForeground(Color.RED);
             }
         }
         catch (IOException e1) {
