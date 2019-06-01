@@ -1,8 +1,12 @@
 package game;
 
+import game.quartz.scheduler.clientsArriveScheduler;
+import javafx.concurrent.Task;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import game.quartz.scheduler.clientsArriveScheduler;
 
 public class Initialize
 {
@@ -15,7 +19,7 @@ public class Initialize
 	private static Graphics2D g;
 	private static boolean forceQuit;
 
-	private static Game game;
+    private static Game game;
 
 	private static void init() throws InterruptedException
 	{
@@ -45,7 +49,6 @@ public class Initialize
 		long lastTime = System.nanoTime();
 		double secondsPerTick = 1.0 / 60.0;
 		int tickCount = 0;
-
 		while (!forceQuit)
 		{
 			long now = System.nanoTime();
@@ -94,21 +97,21 @@ public class Initialize
 					e.printStackTrace();
 				}
 			}
+
 		}
+
 	}
 
 	public static void main(String[] args) throws InterruptedException
 	{
 		Initialize.init();
-
 		JFrame frame = new JFrame(NAME);
 		frame.setDefaultCloseOperation(3);
 		frame.setContentPane(game);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
-		Initialize.start();
+		start();
 	}
 
-}//
+}

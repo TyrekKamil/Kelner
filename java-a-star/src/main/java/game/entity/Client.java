@@ -32,8 +32,7 @@ public class Client {
         this.y = y;
         sx = 0;
         sy = 0;
-        speed = 4;
-
+        speed = 2;
         walking = false;
         fixing = false;
         path = null;
