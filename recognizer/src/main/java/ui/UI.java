@@ -50,7 +50,7 @@ public class UI {
         vg16.loadModel();
         try {
             FoodType foodType = vg16.detectBurger(food, 0.6);
-            if (foodType == FoodType.PIZZA) {
+            if (foodType == FoodType.PIZZA){
                 predictionResponse.setText("Pizza");
                 predictionResponse.setForeground(Color.GREEN);
             } else if (foodType == FoodType.BURGER) {

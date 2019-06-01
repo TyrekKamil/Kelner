@@ -11,12 +11,14 @@ public class Node
     private Node parent;
     private int g;
     private int h;
+    private int value;
 
-    public Node(int x, int y, boolean walkable)
+    public Node(int x, int y, boolean walkable, int value)
     {
         this.x = x;
         this.y = y;
         this.walkable = walkable;
+        this.value = value;
     }
 
     public void setG(Node parent)
@@ -107,4 +109,11 @@ public class Node
         return false;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }

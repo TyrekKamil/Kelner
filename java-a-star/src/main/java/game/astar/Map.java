@@ -24,7 +24,7 @@ public class Map
 		{
 			for (int y = 0; y < height; y++)
 			{
-				nodes[x][y] = new Node(x, y, map[y][x] == 0);
+				nodes[x][y] = new Node(x, y, map[y][x] == 0 || map[y][x] == 2 || map[y][x] == 3 , map[y][x]);
 			}
 		}
 	}
@@ -35,11 +35,11 @@ public class Map
 		{
 			for (int x = 0; x < width; x++)
 			{
-				if (!nodes[x][y].isWalkable())
+				if (!nodes[x][y].isWalkable() && nodes[x][y].getValue() == 1)
 				{
 					g.setColor(Color.DARK_GRAY);
 				}
-				else if (path != null && path.contains(new Node(x, y, true)))
+				else if (path != null && path.contains(new Node(x, y, true, 0)))
 				{
 					g.setColor(Color.PINK);
 				}

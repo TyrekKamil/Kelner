@@ -25,9 +25,11 @@ public class Game extends JPanel{
             {0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1,},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
             {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},};
+    private Integer counter = 0;
     private Map map;
     private Waiter waiter;
     private List<Node> path;
+    private List<Node> leavePath;
     private Client client;
     private Client client1;
     private Client client2;
@@ -37,6 +39,7 @@ public class Game extends JPanel{
     private Client client6;
     private ArrayList<Point> chairs = new ArrayList<>();
     private ArrayList<Point> chairsTaken = new ArrayList<>();
+    private ArrayList<Client> clientsInTables = new ArrayList<>();
 
 
     // 2 kuchnia
@@ -52,11 +55,10 @@ public class Game extends JPanel{
         Point chair5 = new Point(8, 7);
         Point chair6 = new Point(12, 7);
         Collections.addAll(chairs, chair1, chair2, chair3, chair4, chair5, chair6);
-        int[][] m = m0;
 
-        setPreferredSize(new Dimension(m[0].length * 32, m.length * 32));
+        setPreferredSize(new Dimension(m0[0].length * 32, m0.length * 32));
 
-        map = new Map(m);
+        map = new Map(m0);
         waiter = new Waiter(0, 1);
         client = new Client(0, 8);
         client1 = new Client(0, 8);
@@ -129,9 +131,9 @@ public class Game extends JPanel{
             if (chairsTaken.size() <= 6 && chairs.size() >= 1) {
                 clientPath(cl);
                 this.listOfClients.remove(cl);
-
+                clientLeaves(cl);
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             System.out.println("no more clients at the tables");
         }
 
@@ -179,17 +181,18 @@ public class Game extends JPanel{
         waiter.followPath(path);
     }
 
-    // logika na odejscie - cos na ostatnich klientach sie wyjebuje mimo dodania, do przemyslenia kolejkowanie i client path
-    /*
-    private void clientLeaves(Point client, Client cl) {
-        path = map.findPath(cl.getY(), cl.getY(), 0, 1);
-        cl.followPath(path);
+    // lewy dolny idzie przez stolik, a prawa kolumna nie chce dzialac xd
+    public void clientLeaves(Client cl) {
+        m0[cl.getY()][cl.getX()] = 0;
+        map = new Map(m0);
+        leavePath = map.findPath(cl.getY(), cl.getX(), 0, 0);
+        cl.followPath(leavePath);
+        Point client = new Point(cl.getX(),cl.getY());
+        System.out.println("!!!client: " + client.getX() + " " + client.getY() + " has left");
         chairs.add(client);
-        chairsTaken.remove(client);
-        System.out.println("client: " + client.getX() + " " + client.getY() + " has left");
+        clientsInTables.remove(cl);
         update();
     }
-    */
 
     // wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
     private void clientPath(Client currentClient) {
@@ -199,9 +202,17 @@ public class Game extends JPanel{
         path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
         currentClient.followPath(path);
         chairsTaken.add(tableChoice);
+        clientsInTables.add(currentClient);
+        System.out.println(clientsInTables.size());
         System.out.printf("Chairs taken:%s%n", chairsTaken);
-		/*currentClient.setX(tableChoice.x);
-		currentClient.setY(tableChoice.y);*/
+        m0[tableChoice.y][tableChoice.x] = 4;
+        map = new Map(m0);
+        for (int i = 0; i < m0.length; i++) {
+            for (int j = 0; j < m0[i].length; j++) {
+                System.out.print(m0[i][j] + " ");
+            }
+            System.out.println();
+        }
         clientArrived(tableChoice, currentClient);
         update();
     }
