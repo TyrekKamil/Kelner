@@ -81,7 +81,6 @@ public class Game extends JPanel{
         client3.update();
         client4.update();
         client5.update();
-        client6.update();
     }
 
     public void render(Graphics2D g) {
@@ -115,10 +114,6 @@ public class Game extends JPanel{
         g.setColor(Color.CYAN);
         g.fillRect(client5.getX() * 32 + client5.getSx(), client5.getY() * 32 + client5.getSy(), 32, 32);
 
-        g.setColor(Color.PINK);
-        g.fillRect(client6.getX() * 32 + client6.getSx(), client6.getY() * 32 + client6.getSy(), 32, 32);
-
-
     }
 
 
@@ -140,7 +135,7 @@ public class Game extends JPanel{
 
     private void clientArrived(Point cl, Client currentClient) {
         callWaiter(cl);
-        waiterPlacesOrder();
+        clientPlacesOrder();
         waiterBringsFood();
 
         try
@@ -154,13 +149,23 @@ public class Game extends JPanel{
 
         clientServed++;
         System.out.println("served client: " + clientServed);
+        if(clientServed == 6)
+        {
+            waiterGoesToKitchen();
+        }
     }
 
 
     private void waiterBringsFood() {
     }
 
-    private void waiterPlacesOrder() {
+    private void clientPlacesOrder() {
+    }
+
+    private void waiterGoesToKitchen(){
+        path = map.findPath(waiter.getX(), waiter.getY(), 1, 0);
+        waiter.followPath(path);
+
     }
 
     // wywolanie follow path do klienta
