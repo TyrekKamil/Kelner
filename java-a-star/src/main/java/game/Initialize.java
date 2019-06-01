@@ -19,7 +19,7 @@ public class Initialize
 
     private static Game game;
 
-	private static void init() throws InterruptedException
+	private static void init() throws Exception
 	{
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
