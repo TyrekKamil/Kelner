@@ -3,11 +3,16 @@ package game;
 import game.astar.Map;
 import game.astar.Node;
 import game.entity.Client;
+import game.entity.Food;
 import game.entity.Waiter;
 import lombok.Getter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +44,11 @@ public class Game extends JPanel{
     private Client client6;
     private ArrayList<Point> chairs = new ArrayList<>();
     private ArrayList<Point> chairsTaken = new ArrayList<>();
+    File burgerFile = new File("resources/burger1.jpg");
+    File pizzaFile = new File("resources/pizza1.jpg");
+    File saladFile = new File("resources/salad1.jpg");
+    File spaghettiFile = new File("resources/spaghetti1.jpg");
+    Food food = new Food(0,0);
     private ArrayList<Client> clientsInTables = new ArrayList<>();
 
 
@@ -48,6 +58,8 @@ public class Game extends JPanel{
     private ArrayList<Client> listOfClients = new ArrayList<>();
 
     public Game() {
+
+
         Point chair1 = new Point(4, 3);
         Point chair2 = new Point(8, 3);
         Point chair3 = new Point(12, 3);
@@ -56,6 +68,7 @@ public class Game extends JPanel{
         Point chair6 = new Point(12, 7);
         Collections.addAll(chairs, chair1, chair2, chair3, chair4, chair5, chair6);
 
+        foodImage();
         setPreferredSize(new Dimension(m0[0].length * 32, m0.length * 32));
 
         map = new Map(m0);
@@ -75,6 +88,23 @@ public class Game extends JPanel{
         new java.util.Timer().scheduleAtFixedRate(new Timer(this), 1000, 1 * 3000);
     }
 
+    private BufferedImage pizza, spaghetti, salad, burger;
+
+    public void foodImage() {
+        try {
+            burger = ImageIO.read(burgerFile);
+            burger = resize(burger, 32, 32);
+            pizza = ImageIO.read(pizzaFile);
+            pizza = resize(pizza, 32, 32);
+            salad = ImageIO.read(saladFile);
+            salad = resize(salad, 32, 32);
+            spaghetti = ImageIO.read(spaghettiFile);
+            spaghetti = resize(spaghetti, 32, 32);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
     public void update() {
         waiter.update();
         client.update();
@@ -83,10 +113,9 @@ public class Game extends JPanel{
         client3.update();
         client4.update();
         client5.update();
-        client6.update();
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics2D g) throws Exception {
         map.drawMap(g, path);
         g.setColor(Color.GRAY);
         for (int x = 0; x < getWidth(); x += 32) {
@@ -95,6 +124,12 @@ public class Game extends JPanel{
         for (int y = 0; y < getHeight(); y += 32) {
             g.drawLine(0, y, getWidth(), y);
         }
+
+       // super.paintComponent(g);
+        food.setImage(burger);
+        food.setFile(burgerFile);
+        food.show(g);
+
 
         g.setColor(Color.RED);
         g.fillRect(waiter.getX() * 32 + waiter.getSx(), waiter.getY() * 32 + waiter.getSy(), 32, 32);
@@ -117,10 +152,6 @@ public class Game extends JPanel{
         g.setColor(Color.CYAN);
         g.fillRect(client5.getX() * 32 + client5.getSx(), client5.getY() * 32 + client5.getSy(), 32, 32);
 
-        g.setColor(Color.PINK);
-        g.fillRect(client6.getX() * 32 + client6.getSx(), client6.getY() * 32 + client6.getSy(), 32, 32);
-
-
     }
 
 
@@ -140,9 +171,9 @@ public class Game extends JPanel{
     }
 
 
-    private void clientArrived(Point cl, Client currentClient) {
+    private void clientArrived(Point cl, Client currentClient) throws Exception {
         callWaiter(cl);
-        waiterPlacesOrder();
+        clientPlacesOrder();
         waiterBringsFood();
 
         try
@@ -156,13 +187,26 @@ public class Game extends JPanel{
 
         clientServed++;
         System.out.println("served client: " + clientServed);
+        if(clientServed == 6)
+        {
+            waiterGoesToKitchen();
+        }
     }
 
 
     private void waiterBringsFood() {
     }
 
-    private void waiterPlacesOrder() {
+    private void clientPlacesOrder() {
+    }
+
+    private void waiterGoesToKitchen() throws Exception {
+        path = map.findPath(waiter.getX(), waiter.getY(), 1, 0);
+
+        waiter.followPath(path);
+        food.checkFood();
+
+
     }
 
     // wywolanie follow path do klienta
@@ -195,7 +239,7 @@ public class Game extends JPanel{
     }
 
     // wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
-    private void clientPath(Client currentClient) {
+    private void clientPath(Client currentClient) throws Exception {
         Point tableChoice = currentClient.chooseTable(chairs);
         chairs.remove(tableChoice);
         System.out.printf("Chairs free:%s%n", chairs);
@@ -216,5 +260,12 @@ public class Game extends JPanel{
         clientArrived(tableChoice, currentClient);
         update();
     }
-
+    private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 }

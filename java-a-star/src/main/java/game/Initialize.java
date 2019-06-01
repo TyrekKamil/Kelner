@@ -28,8 +28,7 @@ public class Initialize
 		game = new Game();
 	}
 
-	private static void start()
-	{
+	private static void start() throws Exception {
 		run();
 	}
 
@@ -38,8 +37,7 @@ public class Initialize
 		forceQuit = true;
 	}
 
-	public static void run()
-	{
+	public static void run() throws Exception {
 		@SuppressWarnings("unused")
 		int frames = 0;
 
@@ -100,7 +98,7 @@ public class Initialize
 
 	}
 
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] args) throws Exception
 	{
 		Initialize.init();
 		JFrame frame = new JFrame(NAME);
