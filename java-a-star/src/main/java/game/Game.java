@@ -5,6 +5,7 @@ import game.astar.Map;
 import game.astar.Node;
 import game.entity.Client;
 import game.entity.Waiter;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,7 @@ public class Game extends JPanel implements MouseListener {
 
 	// 2 kuchnia
 	// 3 wyjscie
+	@Getter
 	private ArrayList<Client> listOfClients = new ArrayList<>();
 
 	public Game() {
@@ -69,6 +71,11 @@ public class Game extends JPanel implements MouseListener {
 		client5 = new Client(0, 8);
 		client6 = new Client(0, 8);
 		Collections.addAll(listOfClients, client, client1, client2, client3, client4, client5, client6);
+		initQueue();
+	}
+
+	public void initQueue () {
+		new java.util.Timer().scheduleAtFixedRate(new Timer(this), 1000, 1 * 3000);
 	}
 
 	public void update() {
@@ -148,25 +155,14 @@ public class Game extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 	}
 
-	void placeClientsInOrder(){
-		for (Client cl : listOfClients) {
-			while (true) {
-				if (chairsTaken.size() <= 6 && chairs.size() >= 1) {
-					clientPath(cl);
-					break;
-				}
-			}
-		}
-	}
-
 	public void placeClientInOrder() {
-				Client cl = this.listOfClients.get(1);
-				if (chairsTaken.size() <= 6 && chairs.size() >= 1) {
-					clientPath(cl);
-					System.out.println("test" + this.listOfClients.size());
-					this.listOfClients.remove(cl);
+		System.out.println("Dsadasdasdwadaw");
+		Client cl = this.listOfClients.get(0);
+		if (chairsTaken.size() <= 6 && chairs.size() >= 1) {
+			clientPath(cl);
+			this.listOfClients.remove(cl);
 
-			}
+		}
 	}
 
 
@@ -212,9 +208,8 @@ public class Game extends JPanel implements MouseListener {
 		currentClient.followPath(path);
 		chairsTaken.add(tableChoice);
 		clientArrived(tableChoice, currentClient);
+		System.out.println("............"  + currentClient);
 		update();
 	}
-	public ArrayList<Client> getListOfClients() {
-		return listOfClients;
-	}
+
 }

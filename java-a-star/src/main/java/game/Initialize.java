@@ -19,7 +19,7 @@ public class Initialize
 	private static Graphics2D g;
 	private static boolean forceQuit;
 
-	private static Game game;
+    private static Game game;
 
 	private static void init() throws InterruptedException
 	{
@@ -32,7 +32,6 @@ public class Initialize
 
 	private static void start()
 	{
-
 		run();
 	}
 
@@ -112,11 +111,7 @@ public class Initialize
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		clientsArriveScheduler scheduler = new clientsArriveScheduler();
-		scheduler.start();
 		start();
-
-
 	}
 
-}//
+}
