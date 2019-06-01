@@ -1,12 +1,10 @@
 package game;
 
-import game.quartz.scheduler.clientsArriveScheduler;
 import javafx.concurrent.Task;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import game.quartz.scheduler.clientsArriveScheduler;
 
 public class Initialize
 {

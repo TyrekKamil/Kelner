@@ -21,8 +21,9 @@ public class Client {
     private int sy;
 
     private int speed;
-
+    @Getter
     private boolean walking;
+    @Getter
     private boolean fixing;
     private List<Node> path;
 
