@@ -26,18 +26,30 @@ public class Food {
     @Getter @Setter
     private int sy;
 
-    @Getter @Setter
     private BufferedImage image;
 
-    public Food(int x, int y) {
+    public void setImage(BufferedImage image) {
+        this.image = image;
+        this.image = resize(image, 32, 32);
+    }
+
+    public Food(int x, int y, UI ui) {
         this.x = x;
         this.y = y;
+        image = null;
+        sx = 0;
+        sy = 0;
+        this.file = file;
+        this.ui = ui;
+
     }
 
     @Getter @Setter
     private File file;
 
-    public Food(int x, int y, BufferedImage image, File file){
+    private UI ui;
+
+    public Food(int x, int y, BufferedImage image, File file, UI ui){
         this.x = x;
         this.y = y;
         this.image = image;
@@ -45,6 +57,7 @@ public class Food {
         sy = 0;
         image = resize(image, 32, 32);
         this.file = file;
+        this.ui = ui;
 
 
     }
@@ -62,7 +75,7 @@ public class Food {
     }
 
     public void checkFood() throws Exception {
-        UI ui = new UI();
+
         ui.recogniseFood(this.file);
     }
 

@@ -6,6 +6,7 @@ import game.entity.Client;
 import game.entity.Food;
 import game.entity.Waiter;
 import lombok.Getter;
+import ui.UI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -46,17 +47,18 @@ public class Game extends JPanel{
     File pizzaFile = new File("resources/pizza1.jpg");
     File saladFile = new File("resources/salad1.jpg");
     File spaghettiFile = new File("resources/spaghetti1.jpg");
-    Food food = new Food(0,0);
 
+    UI ui = new UI();
+    Food food = new Food(0,0, ui);
 
     // 2 kuchnia
     // 3 wyjscie
     @Getter
     private ArrayList<Client> listOfClients = new ArrayList<>();
 
-    public Game() {
+    public Game() throws Exception {
 
-
+        ui.initUI();
         Point chair1 = new Point(4, 3);
         Point chair2 = new Point(8, 3);
         Point chair3 = new Point(12, 3);
