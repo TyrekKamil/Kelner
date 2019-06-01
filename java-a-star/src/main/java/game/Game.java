@@ -170,7 +170,7 @@ public class Game extends JPanel implements MouseListener {
 		callWaiter(cl);
 		waiterPlacesOrder();
 		waiterBringsFood();
-		clientLeaves(cl, currentClient);
+		//clientLeaves(cl, currentClient);
 		clientServed++;
 		System.out.println("served client: " + clientServed);
 	}
