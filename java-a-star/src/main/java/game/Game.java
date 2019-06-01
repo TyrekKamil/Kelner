@@ -45,6 +45,7 @@ public class Game extends JPanel{
     private Client client6;
     private ArrayList<Point> chairs = new ArrayList<>();
     private ArrayList<Point> chairsTaken = new ArrayList<>();
+    private ArrayList<Client> clientsInTables = new ArrayList<>();
     File burgerFile = new File("resources/burger1.jpg");
     File pizzaFile = new File("resources/pizza1.jpg");
     File saladFile = new File("resources/salad1.jpg");
