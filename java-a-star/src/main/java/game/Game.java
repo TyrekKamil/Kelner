@@ -5,6 +5,7 @@ import game.astar.Node;
 import game.entity.Client;
 import game.entity.Food;
 import game.entity.Waiter;
+import game.timer.makingFoodTimer;
 import game.timer.placeClientInOrderTimer;
 import ui.UI;
 
@@ -63,7 +64,7 @@ public class Game extends JPanel {
     private List<Integer> listOfOrders = new ArrayList<>();
     private List<Food> orderFood = new ArrayList<>();
     private BufferedImage pizza, spaghetti, salad, burger;
-
+    private  Graphics2D g;
     public Game() throws Exception {
 
         ui.initUI();
@@ -102,6 +103,7 @@ public class Game extends JPanel {
 
     private void initQueue() {
         new java.util.Timer().scheduleAtFixedRate(new placeClientInOrderTimer(this), 1000, 1 * 3000);
+        new java.util.Timer().scheduleAtFixedRate(new makingFoodTimer(this), 1000, 1 * 3000);
     }
 
 
@@ -131,6 +133,7 @@ public class Game extends JPanel {
     }
 
     public void render(Graphics2D g) throws Exception {
+        this.g = g;
         map.drawMap(g, path);
         g.setColor(Color.GRAY);
         for (int x = 0; x < getWidth(); x += 32) {
@@ -332,7 +335,7 @@ public class Game extends JPanel {
     public void makingFood(){
         Food food = new Food(0, 0, ui);
         food = orderFood.get(0);
-        food.show();
+        food.show(g);
     }
 
 
