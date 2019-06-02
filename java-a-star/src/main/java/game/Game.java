@@ -332,27 +332,32 @@ public class Game extends JPanel {
         if(order == 1)
         {
             this.food.setFile(pizzaFile);
+            this.food.setImage(pizza);
             System.out.println(order);
 
         }
 
         if(order == 2)
         {
-            this.food.setFile(pizzaFile);
+            this.food.setFile(burgerFile);
+            this.food.setImage(burger);
             System.out.println(order);
         }
 
         if(order == 3)
         {
             this.food.setFile(saladFile);
+            this.food.setImage(salad);
             System.out.println(order);
         }
 
         if(order == 4)
         {
             this.food.setFile(spaghettiFile);
+            this.food.setImage(spaghetti);
             System.out.println(order);
         }
+
 
         Thread.sleep(2000);
 
