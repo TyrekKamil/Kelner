@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Game extends JPanel{
+public class Game extends JPanel {
 
     int clientServed = 0;
     int[][] m0 = { //
@@ -31,6 +31,13 @@ public class Game extends JPanel{
             {0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1,},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
             {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},};
+    //    private ArrayList<Client> clientsInTables = new ArrayList<>();
+    File burgerFile = new File("resources/burger1.jpg");
+    File pizzaFile = new File("resources/pizza1.jpg");
+    File saladFile = new File("resources/salad1.jpg");
+    File spaghettiFile = new File("resources/spaghetti1.jpg");
+    UI ui = new UI();
+    Food food = new Food(0, 0, ui);
     private Integer counter = 0;
     private Map map;
     private Waiter waiter;
@@ -45,15 +52,6 @@ public class Game extends JPanel{
     private Client client6;
     private ArrayList<Point> chairs = new ArrayList<>();
     private ArrayList<Point> chairsTaken = new ArrayList<>();
-//    private ArrayList<Client> clientsInTables = new ArrayList<>();
-    File burgerFile = new File("resources/burger1.jpg");
-    File pizzaFile = new File("resources/pizza1.jpg");
-    File saladFile = new File("resources/salad1.jpg");
-    File spaghettiFile = new File("resources/spaghetti1.jpg");
-
-    UI ui = new UI();
-    Food food = new Food(0,0, ui);
-
     // 2 kuchnia
     // 3 wyjscie
     private ArrayList<Client> listOfClients = new ArrayList<>();
@@ -63,7 +61,7 @@ public class Game extends JPanel{
     private ArrayList<Point> tableWaitingForOrder = new ArrayList<>();
 
     private List<Integer> listOfOrders = new ArrayList<>();
-
+    private BufferedImage pizza, spaghetti, salad, burger;
 
     public Game() throws Exception {
 
@@ -92,11 +90,23 @@ public class Game extends JPanel{
         initQueue();
     }
 
-    public void initQueue() {
+    private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
+
+    private void initQueue() {
         new java.util.Timer().scheduleAtFixedRate(new Timer(this), 1000, 1 * 3000);
     }
 
-    private BufferedImage pizza, spaghetti, salad, burger;
+    private void initLeaving() {
+        new java.util.Timer().scheduleAtFixedRate(new LeaveTimer(this), 1000, 1 * 3000);
+    }
+
 
     public void foodImage() {
         try {
@@ -133,7 +143,7 @@ public class Game extends JPanel{
             g.drawLine(0, y, getWidth(), y);
         }
 
-       // super.paintComponent(g);
+        // super.paintComponent(g);
         food.setImage(burger);
         food.setFile(burgerFile);
         food.show(g);
@@ -162,8 +172,6 @@ public class Game extends JPanel{
 
     }
 
-
-
     public void placeClientInOrder() {
         try {
             Client cl = this.listOfClients.get(0);
@@ -171,8 +179,7 @@ public class Game extends JPanel{
                 clientPath(cl);
                 this.listOfClients.remove(cl);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("no more clients at the tables");
         }
 
@@ -181,58 +188,63 @@ public class Game extends JPanel{
     // w 2 array listach stolik do obsluzenia, w osobnej metodzie bedzie decydowane czy klient pojdzie na podstawie czy dostal zamowienie
     // do list of orders do przemyslenia jak to przeorganizwac, jak to przechowujemy? czy tak wystarczy, generalnie malo prawdopodobne
     // ze w tym samym czasie dodadza sie wszyscy, takze sciagniecie tego samoeg indeksu z clientWaitingForOrder tableWaitingForOrder listOfOrders powinno dac rezultat ok ?????
+    // w testach wychodzi ok wiec zostawiam
     private void clientArrived(Point cl, Client currentClient) throws Exception {
         callWaiter(cl);
         clientWaitingForOrder.add(currentClient);
+        System.out.println("clients waiting for order: " + clientWaitingForOrder);
         tableWaitingForOrder.add(cl);
         int order = clientPlacesOrder();
         listOfOrders.add(order);
         System.out.println("client: " + currentClient + " has placed order nr:  " + order);
-        try
-        {
+        try {
             Thread.sleep(4000);
-        }
-        catch(InterruptedException ex)
-        {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
         clientServed++;
         System.out.println("served client: " + clientServed);
-        if(clientServed == 6)
-        {
+        if (clientServed == 6) {
             waiterGoesToKitchen();
         }
     }
 
-
     private void waiterManagesOrders() {
-        for (int i = 0; i <= clientWaitingForOrder.size()-1; i++){
+        for (int i = 0; i <= clientWaitingForOrder.size() - 1; i++) {
             waiterDeliversOrders(tableWaitingForOrder.get(i), listOfOrders.get(i));
-            clientLeaves(clientWaitingForOrder.get(i));
+            if (i == 5)
+                initLeaving();
         }
     }
 
-    private void waiterDeliversOrders(Point table, int order) {
-        try
-        {
-            Thread.sleep(3000);
+    public void clientsStartLeaving() {
+        System.out.println("clients will leave now");
+        for (Client clientServed : clientWaitingForOrder) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            clientLeaves(clientServed);
         }
-        catch(InterruptedException ex)
-        {
+
+
+    }
+
+    private void waiterDeliversOrders(Point table, int order) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
         path = map.findPath(waiter.getX(), waiter.getY(), (int) table.getX() - 1, (int) table.getY());
-        System.out.println("visited client: " + client + "at position: " + table.getX() + " " + table.getY());
+        System.out.println("brought food to client: " + "at position: " + table.getX() + " " + table.getY());
         waiter.followPath(path);
-
-        try
-        {
+        try {
             Thread.sleep(3000);
-        }
-        catch(InterruptedException ex)
-        {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
@@ -242,9 +254,8 @@ public class Game extends JPanel{
 
     //randomowe zamowienie od 1 do 4
     private int clientPlacesOrder() {
-        return  new Random().ints(1, 4).findFirst().getAsInt();
+        return new Random().ints(1, 5).findFirst().getAsInt();
     }
-
 
     // po kolei orderami musi pojsc do klienta
     private void waiterGoesToKitchen() throws Exception {
@@ -259,12 +270,9 @@ public class Game extends JPanel{
 
     // wywolanie follow path do klienta
     private void callWaiter(Point client) {
-        try
-        {
+        try {
             Thread.sleep(4000);
-        }
-        catch(InterruptedException ex)
-        {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
@@ -275,23 +283,20 @@ public class Game extends JPanel{
 
     // lewy dolny idzie przez stolik, a prawa kolumna nie chce dzialac xd
     public void clientLeaves(Client cl) {
-        try
-        {
-            Thread.sleep(1000);
-        }
-        catch(InterruptedException ex)
-        {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
         m0[cl.getY()][cl.getX()] = 0;
         map = new Map(m0);
-        leavePath = map.findPath(cl.getY(), cl.getX(), 0, 3);
+        System.out.println("!!!client: " + cl.getX() + " " + cl.getY() + " has left");
+        leavePath = map.findPath(cl.getX(), cl.getY(), 0, 8);
         cl.followPath(leavePath);
-        Point client = new Point(cl.getX(),cl.getY());
-        System.out.println("!!!client: " + client.getX() + " " + client.getY() + " has left");
-        chairs.add(client);
-        update();
+//        clientWaitingForOrder.remove(cl);
+//        chairs.add(client);
+//        update();
     }
 
     // wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
@@ -315,13 +320,5 @@ public class Game extends JPanel{
         }
         clientArrived(tableChoice, currentClient);
         update();
-    }
-    private static BufferedImage resize(BufferedImage img, int height, int width) {
-        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
     }
 }

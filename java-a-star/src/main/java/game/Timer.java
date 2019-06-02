@@ -8,6 +8,10 @@ public class Timer extends TimerTask {
         this.game = game;
     }
     public void run() {
-        game.placeClientInOrder();
+        try{
+            game.placeClientInOrder();
+        }catch (Exception e){
+            System.out.println("index out of bound caught");
+        }
     }
 }
