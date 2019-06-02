@@ -327,7 +327,7 @@ public class Game extends JPanel {
 
 
     public void makingFood(Integer i) throws InterruptedException {
-        Integer order = orderFood.get(i);
+        int order = orderFood.get(i);
 
         if(order == 1)
         {
