@@ -5,7 +5,6 @@ import game.astar.Node;
 import game.entity.Client;
 import game.entity.Food;
 import game.entity.Waiter;
-import game.timer.makingFoodTimer;
 import game.timer.placeClientInOrderTimer;
 import ui.UI;
 
@@ -62,9 +61,8 @@ public class Game extends JPanel {
     private ArrayList<Point> tableWaitingForOrder = new ArrayList<>();
 
     private List<Integer> listOfOrders = new ArrayList<>();
-    private List<Food> orderFood = new ArrayList<>();
+    private List<Integer> orderFood = new ArrayList<>();
     private BufferedImage pizza, spaghetti, salad, burger;
-    private  Graphics2D g;
     public Game() throws Exception {
 
         ui.initUI();
@@ -103,7 +101,6 @@ public class Game extends JPanel {
 
     private void initQueue() {
         new java.util.Timer().scheduleAtFixedRate(new placeClientInOrderTimer(this), 1000, 1 * 3000);
-        new java.util.Timer().scheduleAtFixedRate(new makingFoodTimer(this), 1000, 1 * 3000);
     }
 
 
@@ -133,7 +130,6 @@ public class Game extends JPanel {
     }
 
     public void render(Graphics2D g) throws Exception {
-        this.g = g;
         map.drawMap(g, path);
         g.setColor(Color.GRAY);
         for (int x = 0; x < getWidth(); x += 32) {
@@ -146,7 +142,7 @@ public class Game extends JPanel {
         // super.paintComponent(g);
         food.setImage(burger);
         food.setFile(burgerFile);
-//        food.show(g);
+        food.show(g);
 
 
         g.setColor(Color.RED);
@@ -198,28 +194,24 @@ public class Game extends JPanel {
         if(order == 1)
         {
             System.out.println("POPROSZE PICE");
-            Food food = new Food(0, 0, pizza, pizzaFile, ui);
 
         }
 
         if(order == 2)
         {
             System.out.println("POPROSZE BURGERA");
-            Food food = new Food(0, 0, burger, burgerFile, ui);
         }
 
         if(order == 3)
         {
             System.out.println("POPROSZE COLESLAWA");
-            Food food = new Food(0, 0, salad, saladFile, ui);
         }
 
         if(order == 4)
         {
             System.out.println("POPROSZE SPAGETI");
-            Food food = new Food(0, 0, spaghetti, spaghettiFile, ui);
         }
-        orderFood.add(food);
+        orderFood.add(order);
         listOfOrders.add(order);
         System.out.println("client: " + currentClient + " has placed order nr:  " + order);
         try {
@@ -235,8 +227,10 @@ public class Game extends JPanel {
         }
     }
     // jako alternatywa tutajj na ostatniej iteracji dodac timer taska nowego, ktory by mial na odchodzenie klientow funcke iterujjjac po clientWaitingForOrder na przyklad
-    private void waiterManagesOrders() {
+    private void waiterManagesOrders() throws Exception {
         for (int i = 0; i <= clientWaitingForOrder.size() - 1; i++) {
+            makingFood(i);
+            this.food.checkFood();
             waiterDeliversOrders(tableWaitingForOrder.get(i), listOfOrders.get(i));
             clientLeaves(clientWaitingForOrder.get(i));
         }
@@ -274,7 +268,7 @@ public class Game extends JPanel {
         path = map.findPath(waiter.getX(), waiter.getY(), 1, 0);
         waiter.followPath(path);
         //na potrzeby chwiolowe szybkosci zakomentowane sprawdzenie jedzia co by nie czekac za dlugio na kelnera, na koniec pamietac o odkom
-//        food.checkFood();
+
 
         waiterManagesOrders();
 
@@ -332,10 +326,37 @@ public class Game extends JPanel {
     }
 
 
-    public void makingFood(){
-        Food fooder = orderFood.get(0);
-        System.out.println("SIema eniu");
-        fooder.show(Initialize.getG());
+    public void makingFood(Integer i) throws InterruptedException {
+        Integer order = orderFood.get(i);
+
+        if(order == 1)
+        {
+            this.food.setFile(pizzaFile);
+            System.out.println(order);
+
+        }
+
+        if(order == 2)
+        {
+            this.food.setFile(pizzaFile);
+            System.out.println(order);
+        }
+
+        if(order == 3)
+        {
+            this.food.setFile(saladFile);
+            System.out.println(order);
+        }
+
+        if(order == 4)
+        {
+            this.food.setFile(spaghettiFile);
+            System.out.println(order);
+        }
+
+        Thread.sleep(2000);
+
+
     }
 
 
