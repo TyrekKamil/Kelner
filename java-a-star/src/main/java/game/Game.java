@@ -5,7 +5,6 @@ import game.astar.Node;
 import game.entity.Client;
 import game.entity.Food;
 import game.entity.Waiter;
-import lombok.Getter;
 import ui.UI;
 
 import javax.imageio.ImageIO;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Game extends JPanel{
 
@@ -45,7 +45,7 @@ public class Game extends JPanel{
     private Client client6;
     private ArrayList<Point> chairs = new ArrayList<>();
     private ArrayList<Point> chairsTaken = new ArrayList<>();
-    private ArrayList<Client> clientsInTables = new ArrayList<>();
+//    private ArrayList<Client> clientsInTables = new ArrayList<>();
     File burgerFile = new File("resources/burger1.jpg");
     File pizzaFile = new File("resources/pizza1.jpg");
     File saladFile = new File("resources/salad1.jpg");
@@ -56,8 +56,14 @@ public class Game extends JPanel{
 
     // 2 kuchnia
     // 3 wyjscie
-    @Getter
     private ArrayList<Client> listOfClients = new ArrayList<>();
+
+    private ArrayList<Client> clientWaitingForOrder = new ArrayList<>();
+
+    private ArrayList<Point> tableWaitingForOrder = new ArrayList<>();
+
+    private List<Integer> listOfOrders = new ArrayList<>();
+
 
     public Game() throws Exception {
 
@@ -164,7 +170,6 @@ public class Game extends JPanel{
             if (chairsTaken.size() <= 6 && chairs.size() >= 1) {
                 clientPath(cl);
                 this.listOfClients.remove(cl);
-                clientLeaves(cl);
             }
         }
         catch (Exception e) {
@@ -173,12 +178,16 @@ public class Game extends JPanel{
 
     }
 
-
+    // w 2 array listach stolik do obsluzenia, w osobnej metodzie bedzie decydowane czy klient pojdzie na podstawie czy dostal zamowienie
+    // do list of orders do przemyslenia jak to przeorganizwac, jak to przechowujemy? czy tak wystarczy, generalnie malo prawdopodobne
+    // ze w tym samym czasie dodadza sie wszyscy, takze sciagniecie tego samoeg indeksu z clientWaitingForOrder tableWaitingForOrder listOfOrders powinno dac rezultat ok ?????
     private void clientArrived(Point cl, Client currentClient) throws Exception {
         callWaiter(cl);
-        clientPlacesOrder();
-        waiterBringsFood();
-
+        clientWaitingForOrder.add(currentClient);
+        tableWaitingForOrder.add(cl);
+        int order = clientPlacesOrder();
+        listOfOrders.add(order);
+        System.out.println("client: " + currentClient + " has placed order nr:  " + order);
         try
         {
             Thread.sleep(4000);
@@ -197,18 +206,54 @@ public class Game extends JPanel{
     }
 
 
-    private void waiterBringsFood() {
+    private void waiterManagesOrders() {
+        for (int i = 0; i <= clientWaitingForOrder.size()-1; i++){
+            waiterDeliversOrders(tableWaitingForOrder.get(i), listOfOrders.get(i));
+            clientLeaves(clientWaitingForOrder.get(i));
+        }
     }
 
-    private void clientPlacesOrder() {
+    private void waiterDeliversOrders(Point table, int order) {
+        try
+        {
+            Thread.sleep(3000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+
+        path = map.findPath(waiter.getX(), waiter.getY(), (int) table.getX() - 1, (int) table.getY());
+        System.out.println("visited client: " + client + "at position: " + table.getX() + " " + table.getY());
+        waiter.followPath(path);
+
+        try
+        {
+            Thread.sleep(3000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+
+        path = map.findPath(waiter.getX(), waiter.getY(), 1, 0);
+        waiter.followPath(path);
     }
 
+    //randomowe zamowienie od 1 do 4
+    private int clientPlacesOrder() {
+        return  new Random().ints(1, 4).findFirst().getAsInt();
+    }
+
+
+    // po kolei orderami musi pojsc do klienta
     private void waiterGoesToKitchen() throws Exception {
         path = map.findPath(waiter.getX(), waiter.getY(), 1, 0);
-
         waiter.followPath(path);
-        food.checkFood();
+        //na potrzeby chwiolowe szybkosci zakomentowane sprawdzenie jedzia co by nie czekac za dlugio na kelnera, na koniec pamietac o odkom
+//        food.checkFood();
 
+        waiterManagesOrders();
 
     }
 
@@ -230,14 +275,22 @@ public class Game extends JPanel{
 
     // lewy dolny idzie przez stolik, a prawa kolumna nie chce dzialac xd
     public void clientLeaves(Client cl) {
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+
         m0[cl.getY()][cl.getX()] = 0;
         map = new Map(m0);
-        leavePath = map.findPath(cl.getY(), cl.getX(), 0, 0);
+        leavePath = map.findPath(cl.getY(), cl.getX(), 0, 3);
         cl.followPath(leavePath);
         Point client = new Point(cl.getX(),cl.getY());
         System.out.println("!!!client: " + client.getX() + " " + client.getY() + " has left");
         chairs.add(client);
-        clientsInTables.remove(cl);
         update();
     }
 
@@ -249,8 +302,8 @@ public class Game extends JPanel{
         path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
         currentClient.followPath(path);
         chairsTaken.add(tableChoice);
-        clientsInTables.add(currentClient);
-        System.out.println(clientsInTables.size());
+//        clientsInTables.add(currentClient);
+//        System.out.println(clientsInTables.size());
         System.out.printf("Chairs taken:%s%n", chairsTaken);
         m0[tableChoice.y][tableChoice.x] = 4;
         map = new Map(m0);
