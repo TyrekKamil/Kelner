@@ -5,6 +5,7 @@ import game.astar.Node;
 import game.entity.Client;
 import game.entity.Food;
 import game.entity.Waiter;
+import game.timer.placeClientInOrderTimer;
 import ui.UI;
 
 import javax.imageio.ImageIO;
@@ -100,7 +101,7 @@ public class Game extends JPanel {
     }
 
     private void initQueue() {
-        new java.util.Timer().scheduleAtFixedRate(new Timer(this), 1000, 1 * 3000);
+        new java.util.Timer().scheduleAtFixedRate(new placeClientInOrderTimer(this), 1000, 1 * 3000);
     }
 
 
@@ -326,4 +327,13 @@ public class Game extends JPanel {
         clientArrived(tableChoice, currentClient);
         update();
     }
+
+
+    public void makingFood(){
+        Food food = new Food(0, 0, ui);
+        food = orderFood.get(0);
+        food.show();
+    }
+
+
 }

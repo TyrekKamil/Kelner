@@ -1,10 +1,12 @@
-package game;
+package game.timer;
+import game.Game;
+
 import java.util.TimerTask;
 
-public class Timer extends TimerTask {
+public class placeClientInOrderTimer extends TimerTask {
     private Game game;
 
-    public Timer (Game game) {
+    public placeClientInOrderTimer(Game game) {
         this.game = game;
     }
     public void run() {
