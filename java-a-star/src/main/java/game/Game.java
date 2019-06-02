@@ -31,7 +31,6 @@ public class Game extends JPanel {
             {0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1,},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
             {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},};
-    //    private ArrayList<Client> clientsInTables = new ArrayList<>();
     File burgerFile = new File("resources/burger1.jpg");
     File pizzaFile = new File("resources/pizza1.jpg");
     File saladFile = new File("resources/salad1.jpg");
@@ -101,10 +100,6 @@ public class Game extends JPanel {
 
     private void initQueue() {
         new java.util.Timer().scheduleAtFixedRate(new Timer(this), 1000, 1 * 3000);
-    }
-
-    private void initLeaving() {
-        new java.util.Timer().scheduleAtFixedRate(new LeaveTimer(this), 1000, 1 * 3000);
     }
 
 
@@ -209,28 +204,15 @@ public class Game extends JPanel {
             waiterGoesToKitchen();
         }
     }
-
+    // jako alternatywa tutajj na ostatniej iteracji dodac timer taska nowego, ktory by mial na odchodzenie klientow funcke iterujjjac po clientWaitingForOrder na przyklad
     private void waiterManagesOrders() {
         for (int i = 0; i <= clientWaitingForOrder.size() - 1; i++) {
             waiterDeliversOrders(tableWaitingForOrder.get(i), listOfOrders.get(i));
-            if (i == 5)
-                initLeaving();
+            clientLeaves(clientWaitingForOrder.get(i));
         }
     }
 
-    public void clientsStartLeaving() {
-        System.out.println("clients will leave now");
-        for (Client clientServed : clientWaitingForOrder) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            clientLeaves(clientServed);
-        }
 
-
-    }
 
     private void waiterDeliversOrders(Point table, int order) {
         try {
@@ -284,7 +266,7 @@ public class Game extends JPanel {
     // lewy dolny idzie przez stolik, a prawa kolumna nie chce dzialac xd
     public void clientLeaves(Client cl) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
@@ -296,7 +278,6 @@ public class Game extends JPanel {
         cl.followPath(leavePath);
 //        clientWaitingForOrder.remove(cl);
 //        chairs.add(client);
-//        update();
     }
 
     // wybranie sciezki - na ten moment metoda w kliencie ze stolikiem wolnym
@@ -307,8 +288,6 @@ public class Game extends JPanel {
         path = map.findPath(currentClient.getX(), currentClient.getY(), tableChoice.x, tableChoice.y);
         currentClient.followPath(path);
         chairsTaken.add(tableChoice);
-//        clientsInTables.add(currentClient);
-//        System.out.println(clientsInTables.size());
         System.out.printf("Chairs taken:%s%n", chairsTaken);
         m0[tableChoice.y][tableChoice.x] = 4;
         map = new Map(m0);
