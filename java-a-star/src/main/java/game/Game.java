@@ -333,9 +333,9 @@ public class Game extends JPanel {
 
 
     public void makingFood(){
-        Food food = new Food(0, 0, ui);
-        food = orderFood.get(0);
-        food.show(g);
+        Food fooder = orderFood.get(0);
+        System.out.println("SIema eniu");
+        fooder.show(Initialize.getG());
     }
 
 

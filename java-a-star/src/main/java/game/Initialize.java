@@ -14,6 +14,11 @@ public class Initialize
 	public static final String NAME = "WaiterAI";
 
 	private static BufferedImage image;
+
+	public static Graphics2D getG() {
+		return g;
+	}
+
 	private static Graphics2D g;
 	private static boolean forceQuit;
 
