@@ -28,6 +28,20 @@ public class Food {
 
     private BufferedImage image;
 
+
+    private File file;
+
+    private UI ui;
+
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
     public void setImage(BufferedImage image) {
         this.image = image;
         this.image = resize(image, 32, 32);
@@ -43,11 +57,6 @@ public class Food {
         this.ui = ui;
 
     }
-
-    @Getter @Setter
-    private File file;
-
-    private UI ui;
 
     public Food(int x, int y, BufferedImage image, File file, UI ui){
         this.x = x;
